@@ -15,11 +15,10 @@ import javax.crypto.spec.SecretKeySpec;
 public class DES3Util {
 	
 	private static final String Algorithm = "DESede"; // 定义 加密算法,可用
-													// DES,DESede,Blowfish
-	//( 冠.义&科*技@有~限` )
+						
 	public static final byte[] DEFAULT_3DES_KEY = new byte[] {
-		-27, -122, -96, 46, -28, -71, -119, 38, -25, -89, -111, 42, -26, 
-		-118, -128, 64, -26, -100, -119, 126, -23, -103, -112, 96
+		-27, -122, -96, 46, -28, -71, -119, 38, 25, -89, -111, 42, -26, 
+		-118, -128, 64, -26, -100, -119, 126, -23, 103, 112, 96
 	};
 	
 	
@@ -147,7 +146,7 @@ public class DES3Util {
 //		final byte[] keyBytes = { 0x11, 0x22, 0x4F, 0x58, (byte) 0x88, 0x10, 0x40, 0x38, 0x28, 0x25, 0x79, 0x51,
 //				(byte) 0xCB, (byte) 0xDD, 0x55, 0x66, 0x77, 0x29, 0x74, (byte) 0x98, 0x30, 0x40, 0x36, (byte) 0xE2 };
 //		[-27, -122, -96, 46, -28, -71, -119, 38, -25, -89, -111, 42, -26, -118, -128, 64, -26, -100, -119, 126, -23, -103, -112, 96]
-		final byte[] keyBytes = toByteKeys("冠.义&科*技@有~限`");
+		final byte[] keyBytes = DEFAULT_3DES_KEY;
 		
 		String szSrc = "This is a 3DES test. 测试";
 		
