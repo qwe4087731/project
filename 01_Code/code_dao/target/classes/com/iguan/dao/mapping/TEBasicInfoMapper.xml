@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iguan.dao.TEBasicInfoMapper">
+	<resultMap id="BaseResultMap" type="com.iguan.entity.model.TEBasicInfo">
+		<id column="ID" jdbcType="BIGINT" property="id" />
+		<result column="BASIC_SN" jdbcType="VARCHAR" property="basicSn" />
+		<result column="BASIC_MODEL" jdbcType="VARCHAR" property="basicModel" />
+		<result column="BASIC_WIFI_MAC" jdbcType="VARCHAR" property="basicWifiMac" />
+		<result column="BASIC_BLE_MAC" jdbcType="VARCHAR" property="basicBleMac" />
+		<result column="BASIC_ACTIVATION_TIME" jdbcType="TIMESTAMP"
+			property="basicActivationTime" />
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		ID, BASIC_SN, BASIC_MODEL, BASIC_WIFI_MAC, BASIC_BLE_MAC,
+		BASIC_ACTIVATION_TIME,
+		CREATE_TIME
+	</sql>
+	<select id="selectByExample" parameterType="com.iguan.entity.model.TEBasicInfoExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from TE_BASIC_INFO
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TE_BASIC_INFO
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+	<select id="selectBySn" parameterType="java.lang.String" 
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from TE_BASIC_INFO
+		where BASIC_SN =
+		#{sn,jdbcType=VARCHAR}
+		order by ID desc
+		limit 0,1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		TE_BASIC_INFO
+		where ID = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.iguan.entity.model.TEBasicInfoExample">
+		delete from TE_BASIC_INFO
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.iguan.entity.model.TEBasicInfo">
+		insert into TE_BASIC_INFO (ID,
+		BASIC_SN, BASIC_MODEL,
+		BASIC_WIFI_MAC, BASIC_BLE_MAC,
+		BASIC_ACTIVATION_TIME,
+		CREATE_TIME)
+		values (#{id,jdbcType=BIGINT},
+		#{basicSn,jdbcType=VARCHAR},
+		#{basicModel,jdbcType=VARCHAR},
+		#{basicWifiMac,jdbcType=VARCHAR}, #{basicBleMac,jdbcType=VARCHAR},
+		#{basicActivationTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.iguan.entity.model.TEBasicInfo">
+		insert into TE_BASIC_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="basicSn != null">
+				BASIC_SN,
+			</if>
+			<if test="basicModel != null">
+				BASIC_MODEL,
+			</if>
+			<if test="basicWifiMac != null">
+				BASIC_WIFI_MAC,
+			</if>
+			<if test="basicBleMac != null">
+				BASIC_BLE_MAC,
+			</if>
+			<if test="basicActivationTime != null">
+				BASIC_ACTIVATION_TIME,
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="basicSn != null">
+				#{basicSn,jdbcType=VARCHAR},
+			</if>
+			<if test="basicModel != null">
+				#{basicModel,jdbcType=VARCHAR},
+			</if>
+			<if test="basicWifiMac != null">
+				#{basicWifiMac,jdbcType=VARCHAR},
+			</if>
+			<if test="basicBleMac != null">
+				#{basicBleMac,jdbcType=VARCHAR},
+			</if>
+			<if test="basicActivationTime != null">
+				#{basicActivationTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<insert id="insertResultId" parameterType="com.iguan.entity.model.TEBasicInfo">
+
+		<selectKey resultType="_long" keyProperty="id" order="AFTER">
+			select @@IDENTITY as id
+		</selectKey>
+		insert into TE_BASIC_INFO (ID, BASIC_SN, BASIC_MODEL,
+		BASIC_WIFI_MAC,
+		BASIC_BLE_MAC, BASIC_ACTIVATION_TIME,
+		CREATE_TIME)
+		values
+		(#{id,jdbcType=BIGINT}, #{basicSn,jdbcType=VARCHAR},
+		#{basicModel,jdbcType=VARCHAR},
+		#{basicWifiMac,jdbcType=VARCHAR},
+		#{basicBleMac,jdbcType=VARCHAR},
+		#{basicActivationTime,jdbcType=TIMESTAMP},
+		#{createTime,jdbcType=TIMESTAMP})
+	</insert>
+
+	<select id="countByExample" parameterType="com.iguan.entity.model.TEBasicInfoExample"
+		resultType="java.lang.Long">
+		select count(*) from TE_BASIC_INFO
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update TE_BASIC_INFO
+		<set>
+			<if test="record.id != null">
+				ID = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.basicSn != null">
+				BASIC_SN = #{record.basicSn,jdbcType=VARCHAR},
+			</if>
+			<if test="record.basicModel != null">
+				BASIC_MODEL = #{record.basicModel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.basicWifiMac != null">
+				BASIC_WIFI_MAC = #{record.basicWifiMac,jdbcType=VARCHAR},
+			</if>
+			<if test="record.basicBleMac != null">
+				BASIC_BLE_MAC = #{record.basicBleMac,jdbcType=VARCHAR},
+			</if>
+			<if test="record.basicActivationTime != null">
+				BASIC_ACTIVATION_TIME =
+				#{record.basicActivationTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.createTime != null">
+				CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update TE_BASIC_INFO
+		set ID = #{record.id,jdbcType=BIGINT},
+		BASIC_SN =
+		#{record.basicSn,jdbcType=VARCHAR},
+		BASIC_MODEL =
+		#{record.basicModel,jdbcType=VARCHAR},
+		BASIC_WIFI_MAC =
+		#{record.basicWifiMac,jdbcType=VARCHAR},
+		BASIC_BLE_MAC =
+		#{record.basicBleMac,jdbcType=VARCHAR},
+		BASIC_ACTIVATION_TIME =
+		#{record.basicActivationTime,jdbcType=TIMESTAMP},
+		CREATE_TIME =
+		#{record.createTime,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.iguan.entity.model.TEBasicInfo">
+		update TE_BASIC_INFO
+		<set>
+			<if test="basicSn != null">
+				BASIC_SN = #{basicSn,jdbcType=VARCHAR},
+			</if>
+			<if test="basicModel != null">
+				BASIC_MODEL = #{basicModel,jdbcType=VARCHAR},
+			</if>
+			<if test="basicWifiMac != null">
+				BASIC_WIFI_MAC = #{basicWifiMac,jdbcType=VARCHAR},
+			</if>
+			<if test="basicBleMac != null">
+				BASIC_BLE_MAC = #{basicBleMac,jdbcType=VARCHAR},
+			</if>
+			<if test="basicActivationTime != null">
+				BASIC_ACTIVATION_TIME =
+				#{basicActivationTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.iguan.entity.model.TEBasicInfo">
+		update
+		TE_BASIC_INFO
+		set BASIC_SN = #{basicSn,jdbcType=VARCHAR},
+		BASIC_MODEL =
+		#{basicModel,jdbcType=VARCHAR},
+		BASIC_WIFI_MAC =
+		#{basicWifiMac,jdbcType=VARCHAR},
+		BASIC_BLE_MAC =
+		#{basicBleMac,jdbcType=VARCHAR},
+		BASIC_ACTIVATION_TIME =
+		#{basicActivationTime,jdbcType=TIMESTAMP},
+		CREATE_TIME =
+		#{createTime,jdbcType=TIMESTAMP}
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

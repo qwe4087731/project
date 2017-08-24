@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iguan.dao.CHBasicInfoXltInfoMapper">
+  <resultMap id="BaseResultMap" type="com.iguan.entity.model.CHBasicInfoXltInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="BASIC_ID" jdbcType="BIGINT" property="basicId" />
+    <result column="LOC_ID" jdbcType="BIGINT" property="locId" />
+    <result column="LNG_ELECTRICITY" jdbcType="INTEGER" property="lngElectricity" />
+    <result column="LNG_SOURCE_CODE" jdbcType="VARCHAR" property="lngSourceCode" />
+    <result column="LNG_TARGET_CODE" jdbcType="VARCHAR" property="lngTargetCode" />
+    <result column="XLT_SOURCE_CONTEXT" jdbcType="VARCHAR" property="xltSourceContext" />
+    <result column="XLT_TARGET_CONTEXT" jdbcType="VARCHAR" property="xltTargetContext" />
+    <result column="XLT_CMW_ASR_CODE" jdbcType="VARCHAR" property="xltCmwAsrCode" />
+    <result column="XLT_CMW_CODE" jdbcType="VARCHAR" property="xltCmwCode" />
+    <result column="XLT_CMW_TTS_CODE" jdbcType="VARCHAR" property="xltCmwTtsCode" />
+    <result column="XLT_IDENTIFICATION_TIME" jdbcType="BIGINT" property="xltIdentificationTime" />
+    <result column="XLT_TRANSLATE_TIME" jdbcType="BIGINT" property="xltTranslateTime" />
+    <result column="XLT_SYNTHESIS_TIME" jdbcType="BIGINT" property="xltSynthesisTime" />
+    <result column="UPLOAD_TIME" jdbcType="TIMESTAMP" property="uploadTime" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, BASIC_ID, LOC_ID, LNG_ELECTRICITY, LNG_SOURCE_CODE, LNG_TARGET_CODE, XLT_SOURCE_CONTEXT, 
+    XLT_TARGET_CONTEXT, XLT_CMW_ASR_CODE, XLT_CMW_CODE, XLT_CMW_TTS_CODE, XLT_IDENTIFICATION_TIME, 
+    XLT_TRANSLATE_TIME, XLT_SYNTHESIS_TIME, UPLOAD_TIME, CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.iguan.entity.model.CHBasicInfoXltInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from CH_BASIC_INFO_XLT_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from CH_BASIC_INFO_XLT_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from CH_BASIC_INFO_XLT_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.iguan.entity.model.CHBasicInfoXltInfoExample">
+    delete from CH_BASIC_INFO_XLT_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.iguan.entity.model.CHBasicInfoXltInfo">
+    insert into CH_BASIC_INFO_XLT_INFO (ID, BASIC_ID, LOC_ID, 
+      LNG_ELECTRICITY, LNG_SOURCE_CODE, LNG_TARGET_CODE, 
+      XLT_SOURCE_CONTEXT, XLT_TARGET_CONTEXT, XLT_CMW_ASR_CODE, 
+      XLT_CMW_CODE, XLT_CMW_TTS_CODE, XLT_IDENTIFICATION_TIME, 
+      XLT_TRANSLATE_TIME, XLT_SYNTHESIS_TIME, UPLOAD_TIME, 
+      CREATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{basicId,jdbcType=BIGINT}, #{locId,jdbcType=BIGINT}, 
+      #{lngElectricity,jdbcType=INTEGER}, #{lngSourceCode,jdbcType=VARCHAR}, #{lngTargetCode,jdbcType=VARCHAR}, 
+      #{xltSourceContext,jdbcType=VARCHAR}, #{xltTargetContext,jdbcType=VARCHAR}, #{xltCmwAsrCode,jdbcType=VARCHAR}, 
+      #{xltCmwCode,jdbcType=VARCHAR}, #{xltCmwTtsCode,jdbcType=VARCHAR}, #{xltIdentificationTime,jdbcType=BIGINT}, 
+      #{xltTranslateTime,jdbcType=BIGINT}, #{xltSynthesisTime,jdbcType=BIGINT}, #{uploadTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iguan.entity.model.CHBasicInfoXltInfo">
+    insert into CH_BASIC_INFO_XLT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="basicId != null">
+        BASIC_ID,
+      </if>
+      <if test="locId != null">
+        LOC_ID,
+      </if>
+      <if test="lngElectricity != null">
+        LNG_ELECTRICITY,
+      </if>
+      <if test="lngSourceCode != null">
+        LNG_SOURCE_CODE,
+      </if>
+      <if test="lngTargetCode != null">
+        LNG_TARGET_CODE,
+      </if>
+      <if test="xltSourceContext != null">
+        XLT_SOURCE_CONTEXT,
+      </if>
+      <if test="xltTargetContext != null">
+        XLT_TARGET_CONTEXT,
+      </if>
+      <if test="xltCmwAsrCode != null">
+        XLT_CMW_ASR_CODE,
+      </if>
+      <if test="xltCmwCode != null">
+        XLT_CMW_CODE,
+      </if>
+      <if test="xltCmwTtsCode != null">
+        XLT_CMW_TTS_CODE,
+      </if>
+      <if test="xltIdentificationTime != null">
+        XLT_IDENTIFICATION_TIME,
+      </if>
+      <if test="xltTranslateTime != null">
+        XLT_TRANSLATE_TIME,
+      </if>
+      <if test="xltSynthesisTime != null">
+        XLT_SYNTHESIS_TIME,
+      </if>
+      <if test="uploadTime != null">
+        UPLOAD_TIME,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="basicId != null">
+        #{basicId,jdbcType=BIGINT},
+      </if>
+      <if test="locId != null">
+        #{locId,jdbcType=BIGINT},
+      </if>
+      <if test="lngElectricity != null">
+        #{lngElectricity,jdbcType=INTEGER},
+      </if>
+      <if test="lngSourceCode != null">
+        #{lngSourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lngTargetCode != null">
+        #{lngTargetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltSourceContext != null">
+        #{xltSourceContext,jdbcType=VARCHAR},
+      </if>
+      <if test="xltTargetContext != null">
+        #{xltTargetContext,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwAsrCode != null">
+        #{xltCmwAsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwCode != null">
+        #{xltCmwCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwTtsCode != null">
+        #{xltCmwTtsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltIdentificationTime != null">
+        #{xltIdentificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="xltTranslateTime != null">
+        #{xltTranslateTime,jdbcType=BIGINT},
+      </if>
+      <if test="xltSynthesisTime != null">
+        #{xltSynthesisTime,jdbcType=BIGINT},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.iguan.entity.model.CHBasicInfoXltInfoExample" resultType="java.lang.Long">
+    select count(*) from CH_BASIC_INFO_XLT_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update CH_BASIC_INFO_XLT_INFO
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.basicId != null">
+        BASIC_ID = #{record.basicId,jdbcType=BIGINT},
+      </if>
+      <if test="record.locId != null">
+        LOC_ID = #{record.locId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lngElectricity != null">
+        LNG_ELECTRICITY = #{record.lngElectricity,jdbcType=INTEGER},
+      </if>
+      <if test="record.lngSourceCode != null">
+        LNG_SOURCE_CODE = #{record.lngSourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lngTargetCode != null">
+        LNG_TARGET_CODE = #{record.lngTargetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltSourceContext != null">
+        XLT_SOURCE_CONTEXT = #{record.xltSourceContext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltTargetContext != null">
+        XLT_TARGET_CONTEXT = #{record.xltTargetContext,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltCmwAsrCode != null">
+        XLT_CMW_ASR_CODE = #{record.xltCmwAsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltCmwCode != null">
+        XLT_CMW_CODE = #{record.xltCmwCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltCmwTtsCode != null">
+        XLT_CMW_TTS_CODE = #{record.xltCmwTtsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.xltIdentificationTime != null">
+        XLT_IDENTIFICATION_TIME = #{record.xltIdentificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xltTranslateTime != null">
+        XLT_TRANSLATE_TIME = #{record.xltTranslateTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.xltSynthesisTime != null">
+        XLT_SYNTHESIS_TIME = #{record.xltSynthesisTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.uploadTime != null">
+        UPLOAD_TIME = #{record.uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update CH_BASIC_INFO_XLT_INFO
+    set ID = #{record.id,jdbcType=BIGINT},
+      BASIC_ID = #{record.basicId,jdbcType=BIGINT},
+      LOC_ID = #{record.locId,jdbcType=BIGINT},
+      LNG_ELECTRICITY = #{record.lngElectricity,jdbcType=INTEGER},
+      LNG_SOURCE_CODE = #{record.lngSourceCode,jdbcType=VARCHAR},
+      LNG_TARGET_CODE = #{record.lngTargetCode,jdbcType=VARCHAR},
+      XLT_SOURCE_CONTEXT = #{record.xltSourceContext,jdbcType=VARCHAR},
+      XLT_TARGET_CONTEXT = #{record.xltTargetContext,jdbcType=VARCHAR},
+      XLT_CMW_ASR_CODE = #{record.xltCmwAsrCode,jdbcType=VARCHAR},
+      XLT_CMW_CODE = #{record.xltCmwCode,jdbcType=VARCHAR},
+      XLT_CMW_TTS_CODE = #{record.xltCmwTtsCode,jdbcType=VARCHAR},
+      XLT_IDENTIFICATION_TIME = #{record.xltIdentificationTime,jdbcType=BIGINT},
+      XLT_TRANSLATE_TIME = #{record.xltTranslateTime,jdbcType=BIGINT},
+      XLT_SYNTHESIS_TIME = #{record.xltSynthesisTime,jdbcType=BIGINT},
+      UPLOAD_TIME = #{record.uploadTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iguan.entity.model.CHBasicInfoXltInfo">
+    update CH_BASIC_INFO_XLT_INFO
+    <set>
+      <if test="basicId != null">
+        BASIC_ID = #{basicId,jdbcType=BIGINT},
+      </if>
+      <if test="locId != null">
+        LOC_ID = #{locId,jdbcType=BIGINT},
+      </if>
+      <if test="lngElectricity != null">
+        LNG_ELECTRICITY = #{lngElectricity,jdbcType=INTEGER},
+      </if>
+      <if test="lngSourceCode != null">
+        LNG_SOURCE_CODE = #{lngSourceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="lngTargetCode != null">
+        LNG_TARGET_CODE = #{lngTargetCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltSourceContext != null">
+        XLT_SOURCE_CONTEXT = #{xltSourceContext,jdbcType=VARCHAR},
+      </if>
+      <if test="xltTargetContext != null">
+        XLT_TARGET_CONTEXT = #{xltTargetContext,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwAsrCode != null">
+        XLT_CMW_ASR_CODE = #{xltCmwAsrCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwCode != null">
+        XLT_CMW_CODE = #{xltCmwCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltCmwTtsCode != null">
+        XLT_CMW_TTS_CODE = #{xltCmwTtsCode,jdbcType=VARCHAR},
+      </if>
+      <if test="xltIdentificationTime != null">
+        XLT_IDENTIFICATION_TIME = #{xltIdentificationTime,jdbcType=BIGINT},
+      </if>
+      <if test="xltTranslateTime != null">
+        XLT_TRANSLATE_TIME = #{xltTranslateTime,jdbcType=BIGINT},
+      </if>
+      <if test="xltSynthesisTime != null">
+        XLT_SYNTHESIS_TIME = #{xltSynthesisTime,jdbcType=BIGINT},
+      </if>
+      <if test="uploadTime != null">
+        UPLOAD_TIME = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iguan.entity.model.CHBasicInfoXltInfo">
+    update CH_BASIC_INFO_XLT_INFO
+    set BASIC_ID = #{basicId,jdbcType=BIGINT},
+      LOC_ID = #{locId,jdbcType=BIGINT},
+      LNG_ELECTRICITY = #{lngElectricity,jdbcType=INTEGER},
+      LNG_SOURCE_CODE = #{lngSourceCode,jdbcType=VARCHAR},
+      LNG_TARGET_CODE = #{lngTargetCode,jdbcType=VARCHAR},
+      XLT_SOURCE_CONTEXT = #{xltSourceContext,jdbcType=VARCHAR},
+      XLT_TARGET_CONTEXT = #{xltTargetContext,jdbcType=VARCHAR},
+      XLT_CMW_ASR_CODE = #{xltCmwAsrCode,jdbcType=VARCHAR},
+      XLT_CMW_CODE = #{xltCmwCode,jdbcType=VARCHAR},
+      XLT_CMW_TTS_CODE = #{xltCmwTtsCode,jdbcType=VARCHAR},
+      XLT_IDENTIFICATION_TIME = #{xltIdentificationTime,jdbcType=BIGINT},
+      XLT_TRANSLATE_TIME = #{xltTranslateTime,jdbcType=BIGINT},
+      XLT_SYNTHESIS_TIME = #{xltSynthesisTime,jdbcType=BIGINT},
+      UPLOAD_TIME = #{uploadTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

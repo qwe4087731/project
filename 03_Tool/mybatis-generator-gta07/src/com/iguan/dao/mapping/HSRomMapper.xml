@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iguan.dao.HSRomMapper">
+  <resultMap id="BaseResultMap" type="com.iguan.entity.model.HSRom">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="API_ID" jdbcType="BIGINT" property="apiId" />
+    <result column="ROM_NAME" jdbcType="VARCHAR" property="romName" />
+    <result column="ROM_CODE" jdbcType="VARCHAR" property="romCode" />
+    <result column="ROM_TYPE_ID" jdbcType="BIGINT" property="romTypeId" />
+    <result column="ROM_SERVICE_CODE" jdbcType="BIGINT" property="romServiceCode" />
+    <result column="ROM_UPLOAD_URL" jdbcType="VARCHAR" property="romUploadUrl" />
+    <result column="ROM_RELEASE_DATETIME" jdbcType="TIMESTAMP" property="romReleaseDatetime" />
+    <result column="ROM_RELEASE_DETAIL" jdbcType="VARCHAR" property="romReleaseDetail" />
+    <result column="ROM_RELEASE_DETAIL_URL" jdbcType="VARCHAR" property="romReleaseDetailUrl" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, API_ID, ROM_NAME, ROM_CODE, ROM_TYPE_ID, ROM_SERVICE_CODE, ROM_UPLOAD_URL, ROM_RELEASE_DATETIME, 
+    ROM_RELEASE_DETAIL, ROM_RELEASE_DETAIL_URL, CREATE_TIME
+  </sql>
+  <select id="selectByExample" parameterType="com.iguan.entity.model.HSRomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from HS_ROM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from HS_ROM
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from HS_ROM
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.iguan.entity.model.HSRomExample">
+    delete from HS_ROM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.iguan.entity.model.HSRom">
+    insert into HS_ROM (ID, API_ID, ROM_NAME, 
+      ROM_CODE, ROM_TYPE_ID, ROM_SERVICE_CODE, 
+      ROM_UPLOAD_URL, ROM_RELEASE_DATETIME, ROM_RELEASE_DETAIL, 
+      ROM_RELEASE_DETAIL_URL, CREATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{apiId,jdbcType=BIGINT}, #{romName,jdbcType=VARCHAR}, 
+      #{romCode,jdbcType=VARCHAR}, #{romTypeId,jdbcType=BIGINT}, #{romServiceCode,jdbcType=BIGINT}, 
+      #{romUploadUrl,jdbcType=VARCHAR}, #{romReleaseDatetime,jdbcType=TIMESTAMP}, #{romReleaseDetail,jdbcType=VARCHAR}, 
+      #{romReleaseDetailUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.iguan.entity.model.HSRom">
+    insert into HS_ROM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="apiId != null">
+        API_ID,
+      </if>
+      <if test="romName != null">
+        ROM_NAME,
+      </if>
+      <if test="romCode != null">
+        ROM_CODE,
+      </if>
+      <if test="romTypeId != null">
+        ROM_TYPE_ID,
+      </if>
+      <if test="romServiceCode != null">
+        ROM_SERVICE_CODE,
+      </if>
+      <if test="romUploadUrl != null">
+        ROM_UPLOAD_URL,
+      </if>
+      <if test="romReleaseDatetime != null">
+        ROM_RELEASE_DATETIME,
+      </if>
+      <if test="romReleaseDetail != null">
+        ROM_RELEASE_DETAIL,
+      </if>
+      <if test="romReleaseDetailUrl != null">
+        ROM_RELEASE_DETAIL_URL,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="apiId != null">
+        #{apiId,jdbcType=BIGINT},
+      </if>
+      <if test="romName != null">
+        #{romName,jdbcType=VARCHAR},
+      </if>
+      <if test="romCode != null">
+        #{romCode,jdbcType=VARCHAR},
+      </if>
+      <if test="romTypeId != null">
+        #{romTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="romServiceCode != null">
+        #{romServiceCode,jdbcType=BIGINT},
+      </if>
+      <if test="romUploadUrl != null">
+        #{romUploadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="romReleaseDatetime != null">
+        #{romReleaseDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="romReleaseDetail != null">
+        #{romReleaseDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="romReleaseDetailUrl != null">
+        #{romReleaseDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.iguan.entity.model.HSRomExample" resultType="java.lang.Long">
+    select count(*) from HS_ROM
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update HS_ROM
+    <set>
+      <if test="record.id != null">
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.apiId != null">
+        API_ID = #{record.apiId,jdbcType=BIGINT},
+      </if>
+      <if test="record.romName != null">
+        ROM_NAME = #{record.romName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.romCode != null">
+        ROM_CODE = #{record.romCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.romTypeId != null">
+        ROM_TYPE_ID = #{record.romTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.romServiceCode != null">
+        ROM_SERVICE_CODE = #{record.romServiceCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.romUploadUrl != null">
+        ROM_UPLOAD_URL = #{record.romUploadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.romReleaseDatetime != null">
+        ROM_RELEASE_DATETIME = #{record.romReleaseDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.romReleaseDetail != null">
+        ROM_RELEASE_DETAIL = #{record.romReleaseDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.romReleaseDetailUrl != null">
+        ROM_RELEASE_DETAIL_URL = #{record.romReleaseDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update HS_ROM
+    set ID = #{record.id,jdbcType=BIGINT},
+      API_ID = #{record.apiId,jdbcType=BIGINT},
+      ROM_NAME = #{record.romName,jdbcType=VARCHAR},
+      ROM_CODE = #{record.romCode,jdbcType=VARCHAR},
+      ROM_TYPE_ID = #{record.romTypeId,jdbcType=BIGINT},
+      ROM_SERVICE_CODE = #{record.romServiceCode,jdbcType=BIGINT},
+      ROM_UPLOAD_URL = #{record.romUploadUrl,jdbcType=VARCHAR},
+      ROM_RELEASE_DATETIME = #{record.romReleaseDatetime,jdbcType=TIMESTAMP},
+      ROM_RELEASE_DETAIL = #{record.romReleaseDetail,jdbcType=VARCHAR},
+      ROM_RELEASE_DETAIL_URL = #{record.romReleaseDetailUrl,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.iguan.entity.model.HSRom">
+    update HS_ROM
+    <set>
+      <if test="apiId != null">
+        API_ID = #{apiId,jdbcType=BIGINT},
+      </if>
+      <if test="romName != null">
+        ROM_NAME = #{romName,jdbcType=VARCHAR},
+      </if>
+      <if test="romCode != null">
+        ROM_CODE = #{romCode,jdbcType=VARCHAR},
+      </if>
+      <if test="romTypeId != null">
+        ROM_TYPE_ID = #{romTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="romServiceCode != null">
+        ROM_SERVICE_CODE = #{romServiceCode,jdbcType=BIGINT},
+      </if>
+      <if test="romUploadUrl != null">
+        ROM_UPLOAD_URL = #{romUploadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="romReleaseDatetime != null">
+        ROM_RELEASE_DATETIME = #{romReleaseDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="romReleaseDetail != null">
+        ROM_RELEASE_DETAIL = #{romReleaseDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="romReleaseDetailUrl != null">
+        ROM_RELEASE_DETAIL_URL = #{romReleaseDetailUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.iguan.entity.model.HSRom">
+    update HS_ROM
+    set API_ID = #{apiId,jdbcType=BIGINT},
+      ROM_NAME = #{romName,jdbcType=VARCHAR},
+      ROM_CODE = #{romCode,jdbcType=VARCHAR},
+      ROM_TYPE_ID = #{romTypeId,jdbcType=BIGINT},
+      ROM_SERVICE_CODE = #{romServiceCode,jdbcType=BIGINT},
+      ROM_UPLOAD_URL = #{romUploadUrl,jdbcType=VARCHAR},
+      ROM_RELEASE_DATETIME = #{romReleaseDatetime,jdbcType=TIMESTAMP},
+      ROM_RELEASE_DETAIL = #{romReleaseDetail,jdbcType=VARCHAR},
+      ROM_RELEASE_DETAIL_URL = #{romReleaseDetailUrl,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
