@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.RandomAccessFile;
 
+import org.phoenix.common.constant.CharSetConst;
+
 public class FileUtils {
 	public static final String file_separator = System
 			.getProperty("file.separator");
@@ -28,7 +30,7 @@ public class FileUtils {
 
 	public static void writeDataToFile(String filepath, String data,
 			boolean append) throws Exception {
-		writeDataToFile(filepath, data, "utf-8", append);
+		writeDataToFile(filepath, data, CharSetConst.UTF_8, append);
 	}
 
 	public static void writeDataToFile(String filepath, String data,

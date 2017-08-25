@@ -27,6 +27,7 @@ import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.phoenix.common.constant.CharSetConst;
 
 //httpclient本来是commons下的一个子项目，后来由于是HTTP相关部分，所以被移到HttpComponents里去了。 
 public class HttpUtils {
@@ -207,7 +208,7 @@ public class HttpUtils {
 		try {
 			response = httpClient.execute(httpGet, context);
 			is = response.getEntity().getContent();
-			return StreamUtils.stream2str(is, "utf-8").trim();
+			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
 		} catch (Exception e) {
 			logger.error("HttpUtil get falied:" + getUrl, e);
 		} finally {
@@ -247,12 +248,12 @@ public class HttpUtils {
 			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
 			String data = postAndGetData("http://www.tvmao.com/servlet/login",
 					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					"utf-8", headMap, bodyMap);
+					CharSetConst.UTF_8, headMap, bodyMap);
 			System.out.println(data);
 			System.out.println("=============================");
 
 			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					"utf-8", headMap);
+					CharSetConst.UTF_8, headMap);
 			System.out.println(data);
 			return;
 		}
