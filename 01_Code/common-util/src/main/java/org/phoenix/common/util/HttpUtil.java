@@ -242,9 +242,6 @@ public class HttpUtil {
 		if (true) {
 			logger.setLevel(Level.INFO);
 			Map<String, String> bodyMap = new HashMap<String, String>();
-			bodyMap.put("email", "qwe4087731@gmail.com");
-			bodyMap.put("pwd", "4440702a");
-			bodyMap.put("autoLogin", "1");
 
 			Map<String, String> headMap = new HashMap<String, String>();
 			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
