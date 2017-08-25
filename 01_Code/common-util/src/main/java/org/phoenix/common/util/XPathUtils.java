@@ -28,6 +28,8 @@ import org.xml.sax.InputSource;
  * 
  */
 public class XPathUtils {
+	private static XPathFactory xfactory = XPathFactory.newInstance();
+
 	public static String html2xmlstr(String html_data) throws Exception {
 		HtmlCleaner cleaner = new HtmlCleaner();
 		CleanerProperties properties = cleaner.getProperties();
@@ -47,16 +49,14 @@ public class XPathUtils {
 		// transformations.addTransformation(tt);
 		// properties.setCleanerTransformations(transformations);
 
-		// 此版本会最大性兼容不规范的html代码
 		TagNode node = cleaner.clean(html_data);
+		// 此版本会最大性兼容不规范的html代码
 		// utf-8表示生成的xml文件<?xml version="1.0" encoding="utf-8"?>
 		String xmlData = new CompactXmlSerializer(properties).getAsString(node,
 				CharSetConst.UTF_8);
 
 		return xmlData;
 	}
-
-	private static XPathFactory xfactory = XPathFactory.newInstance();
 
 	private static Object eval(Document doc, String xpath, QName qname)
 			throws Exception {
