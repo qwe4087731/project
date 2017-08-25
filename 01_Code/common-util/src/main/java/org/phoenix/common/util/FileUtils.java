@@ -36,7 +36,7 @@ public class FileUtils {
 		writeByteToFile(filepath, data.getBytes(charset), append);
 	}
 
-	public static void writeByteToFile(String filepath, byte[] bytes,
+	private static void writeByteToFile(String filepath, byte[] bytes,
 			boolean append) throws Exception {
 		File file = new File(filepath);
 		File p = file.getParentFile();
