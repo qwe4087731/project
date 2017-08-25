@@ -29,8 +29,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 //httpclient本来是commons下的一个子项目，后来由于是HTTP相关部分，所以被移到HttpComponents里去了。 
-public class HttpUtil {
-	private static Logger logger = Logger.getLogger(HttpUtil.class);
+public class HttpUtils {
+	private static Logger logger = Logger.getLogger(HttpUtils.class);
 
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
