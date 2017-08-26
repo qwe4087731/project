@@ -5,6 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DateUtils {
+	public static Date getTodayZeroTime() {
+		Calendar cal = Calendar.getInstance();
+		setTodayZeroTime(cal);
+		return cal.getTime();
+	}
+
 	public static void setTodayZeroTime(Calendar cal) {
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);

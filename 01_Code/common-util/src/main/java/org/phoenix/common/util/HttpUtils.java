@@ -27,10 +27,11 @@ import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.phoenix.common.constant.CharSetConst;
 
 //httpclient本来是commons下的一个子项目，后来由于是HTTP相关部分，所以被移到HttpComponents里去了。 
-public class HttpUtil {
-	private static Logger logger = Logger.getLogger(HttpUtil.class);
+public class HttpUtils {
+	private static Logger logger = Logger.getLogger(HttpUtils.class);
 
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
@@ -207,7 +208,7 @@ public class HttpUtil {
 		try {
 			response = httpClient.execute(httpGet, context);
 			is = response.getEntity().getContent();
-			return StreamUtils.stream2str(is, "utf-8").trim();
+			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
 		} catch (Exception e) {
 			logger.error("HttpUtil get falied:" + getUrl, e);
 		} finally {
@@ -242,20 +243,17 @@ public class HttpUtil {
 		if (true) {
 			logger.setLevel(Level.INFO);
 			Map<String, String> bodyMap = new HashMap<String, String>();
-			bodyMap.put("email", "qwe4087731@gmail.com");
-			bodyMap.put("pwd", "4440702a");
-			bodyMap.put("autoLogin", "1");
 
 			Map<String, String> headMap = new HashMap<String, String>();
 			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
 			String data = postAndGetData("http://www.tvmao.com/servlet/login",
 					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					"utf-8", headMap, bodyMap);
+					CharSetConst.UTF_8, headMap, bodyMap);
 			System.out.println(data);
 			System.out.println("=============================");
 
 			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					"utf-8", headMap);
+					CharSetConst.UTF_8, headMap);
 			System.out.println(data);
 			return;
 		}
