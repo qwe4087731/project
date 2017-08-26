@@ -1,20 +1,17 @@
 package org.phoenix.common.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.RandomAccessFile;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import java.util.List;
-
 import org.phoenix.common.constant.CharSetConst;
 
 public class FileUtils {
-	public static final String file_separator = System
+	public static final String FILE_SEPARATOR = System
 			.getProperty("file.separator");
 	private static Logger logger = Logger.getLogger(FileUtils.class);
 
@@ -22,7 +19,7 @@ public class FileUtils {
 			String encoder) throws Exception {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		try {
-			String[] lines = readDataArrayFromFile(fileName, encoder);
+			List<String> lines = readLines(fileName, encoder);
 			for (String line : lines) {
 				String[] values = line.split("=");
 				map.put(values[0], values[1]);
@@ -39,7 +36,7 @@ public class FileUtils {
 			StringBuilder buf = new StringBuilder();
 			for (Map.Entry<String, String> entry : map.entrySet()) {
 				buf.append(entry.getKey()).append("=").append(entry.getValue())
-						.append(file_separator);
+						.append(FILE_SEPARATOR);
 			}
 			if (buf.length() > 0) {
 				writeDataToFile(filepath, buf.toString(), encoder, append);
@@ -51,7 +48,7 @@ public class FileUtils {
 			throws Exception {
 		Set<String> set = new LinkedHashSet<String>();
 		try {
-			String[] lines = readDataArrayFromFile(fileName, encoder);
+			List<String> lines = readLines(fileName, encoder);
 			for (String line : lines) {
 				set.add(line);
 			}
@@ -66,7 +63,7 @@ public class FileUtils {
 		if (set != null) {
 			StringBuilder buf = new StringBuilder();
 			for (String line : set) {
-				buf.append(line).append(file_separator);
+				buf.append(line).append(FILE_SEPARATOR);
 			}
 			if (buf.length() > 0) {
 				writeDataToFile(filepath, buf.toString(), encoder, append);
