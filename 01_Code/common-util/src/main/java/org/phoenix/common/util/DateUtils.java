@@ -24,7 +24,7 @@ public class DateUtils {
 
 	public static String format(Date date, String format) {
 		if (date == null)
-			return "";
+			return null;
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
