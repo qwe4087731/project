@@ -25,7 +25,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.phoenix.common.constant.CharSetConst;
 
@@ -76,7 +75,7 @@ public class HttpUtils {
 	public static String getData(String url, String encoder,
 			Map<String, String> headerMap) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtil get url:" + url);
+			logger.info("HttpUtils get url:" + url);
 		}
 
 		// CookieStore cookieStore = new BasicCookieStore();
@@ -99,7 +98,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, encoder).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtil get url failed:" + url, e);
+			logger.error("HttpUtils get url failed:" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -109,7 +108,7 @@ public class HttpUtils {
 
 	public static void download(String url, String destFile) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtil get url:" + url);
+			logger.info("HttpUtils download file from url:" + url);
 		}
 
 		HttpGet httpGet = new HttpGet(url);
@@ -156,7 +155,7 @@ public class HttpUtils {
 			// System.out.println("Local cookie: " + cookies.get(i));
 			// }
 		} catch (Exception e) {
-			logger.error("HttpUtil post url failed:" + url, e);
+			logger.error("HttpUtils post url failed:" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -188,15 +187,15 @@ public class HttpUtils {
 		try {
 			// InputStream is = response.getEntity().getContent();
 			// StreamUtils.stream2str(is, encoder).trim();
-			if (logger.isInfoEnabled()) {
+			if (logger.isDebugEnabled()) {
 				List<Cookie> cookies = cookieStore.getCookies();
 				for (int i = 0; i < cookies.size(); i++) {
-					logger.info("show cookie: " + cookies.get(i));
+					logger.debug("show cookie: " + cookies.get(i));
 				}
 			}
 
 		} catch (Exception e) {
-			logger.error("HttpUtil post failed:" + postUrl, e);
+			logger.error("HttpUtils post failed:" + postUrl, e);
 			return null;
 		} finally {
 			StreamUtils.closeStream(response);
@@ -210,7 +209,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtil get falied:" + getUrl, e);
+			logger.error("HttpUtils get falied:" + getUrl, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -240,8 +239,7 @@ public class HttpUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (true) {
-			logger.setLevel(Level.INFO);
+		if (false) {
 			Map<String, String> bodyMap = new HashMap<String, String>();
 
 			Map<String, String> headMap = new HashMap<String, String>();
@@ -257,5 +255,8 @@ public class HttpUtils {
 			System.out.println(data);
 			return;
 		}
+
+		String data = getData("www.youtube.com", "utf-8");
+		System.out.println(data);
 	}
 }
