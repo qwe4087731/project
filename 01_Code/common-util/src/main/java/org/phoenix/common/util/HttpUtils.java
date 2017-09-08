@@ -75,7 +75,7 @@ public class HttpUtils {
 	public static String getData(String url, String encoder,
 			Map<String, String> headerMap) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtils get url:" + url);
+			logger.info("HttpUtils get url：" + url);
 		}
 
 		// CookieStore cookieStore = new BasicCookieStore();
@@ -98,7 +98,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, encoder).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtils get url failed:" + url, e);
+			logger.error("HttpUtils get url failed：" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -108,7 +108,7 @@ public class HttpUtils {
 
 	public static void download(String url, String destFile) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtils download file from url:" + url);
+			logger.info("HttpUtils download file from url：" + url);
 		}
 
 		HttpGet httpGet = new HttpGet(url);
@@ -155,7 +155,7 @@ public class HttpUtils {
 			// System.out.println("Local cookie: " + cookies.get(i));
 			// }
 		} catch (Exception e) {
-			logger.error("HttpUtils post url failed:" + url, e);
+			logger.error("HttpUtils post url failed：" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -190,12 +190,12 @@ public class HttpUtils {
 			if (logger.isDebugEnabled()) {
 				List<Cookie> cookies = cookieStore.getCookies();
 				for (int i = 0; i < cookies.size(); i++) {
-					logger.debug("show cookie: " + cookies.get(i));
+					logger.debug("show cookie： " + cookies.get(i));
 				}
 			}
 
 		} catch (Exception e) {
-			logger.error("HttpUtils post failed:" + postUrl, e);
+			logger.error("HttpUtils post failed：" + postUrl, e);
 			return null;
 		} finally {
 			StreamUtils.closeStream(response);
@@ -209,7 +209,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtils get falied:" + getUrl, e);
+			logger.error("HttpUtils get falied：" + getUrl, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
