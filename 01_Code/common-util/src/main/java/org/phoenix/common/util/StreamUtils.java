@@ -43,7 +43,7 @@ public class StreamUtils {
 			try {
 				closeable.close();
 			} catch (IOException e) {
-				logger.error("close stream error, ", e);
+				logger.error("close stream error", e);
 			}
 		}
 	}
