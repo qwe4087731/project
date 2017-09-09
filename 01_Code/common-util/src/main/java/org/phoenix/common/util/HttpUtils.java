@@ -35,10 +35,10 @@ public class HttpUtils {
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
 
-	public static String bdUserAgent = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
-	public static String ggUserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+	public static String bd_spiderUserAgent = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
+	public static String gg_spiderUserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 
-	public static String pc_chomeUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+	public static String pc_chomeUserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
 	public static String pc_ieEdgeUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
 	public static String pc_ffUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
 
@@ -255,8 +255,14 @@ public class HttpUtils {
 			System.out.println(data);
 			return;
 		}
+		HashMap<String, String> bodyMap = new HashMap<String, String>();
+		bodyMap.put("username", "qwe4087731@126.com");
+		bodyMap.put("password", "466284796a");
+		bodyMap.put("appid", "on");
+		postData("https://kyfw.12306.cn/passport/web/login", "utf-8", null, null);
 
-		String data = getData("www.youtube.com", "utf-8");
+		
+		String data = getData("http://kyfw.12306.cn/passport/captcha/captcha-image", "utf-8");
 		System.out.println(data);
 	}
 }
