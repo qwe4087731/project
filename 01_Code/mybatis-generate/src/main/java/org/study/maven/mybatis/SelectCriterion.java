@@ -3,12 +3,10 @@ package org.study.maven.mybatis;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectCriterion {
+public class SelectCriterion extends BaseCriterion {
 	protected String orderByClause;
 
 	protected boolean distinct;
-
-	protected String whereClause;
 
 	protected int begin;
 
@@ -34,14 +32,6 @@ public class SelectCriterion {
 
 	public boolean isDistinct() {
 		return distinct;
-	}
-
-	public String getWhereClause() {
-		return whereClause;
-	}
-
-	public void setWhereClause(String whereClause) {
-		this.whereClause = whereClause;
 	}
 
 	public int getBegin() {

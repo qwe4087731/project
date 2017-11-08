@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-	<context id="testTables" targetRuntime="MyBatis3Simple"
+	<context id="testTables" targetRuntime="MyBatis3"
 		defaultModelType="flat">
 		<!-- 自动生成toString方法插件 -->
 		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
