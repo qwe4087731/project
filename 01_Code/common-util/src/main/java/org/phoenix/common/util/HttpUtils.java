@@ -35,10 +35,10 @@ public class HttpUtils {
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
 
-	public static String bdUserAgent = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
-	public static String ggUserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+	public static String bd_spiderUserAgent = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
+	public static String gg_spiderUserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 
-	public static String pc_chomeUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36";
+	public static String pc_chomeUserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
 	public static String pc_ieEdgeUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
 	public static String pc_ffUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
 
@@ -75,7 +75,7 @@ public class HttpUtils {
 	public static String getData(String url, String encoder,
 			Map<String, String> headerMap) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtil get url:" + url);
+			logger.info("HttpUtils get url：" + url);
 		}
 
 		// CookieStore cookieStore = new BasicCookieStore();
@@ -98,7 +98,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, encoder).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtil get url failed:" + url, e);
+			logger.error("HttpUtils get url failed：" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -108,7 +108,7 @@ public class HttpUtils {
 
 	public static void download(String url, String destFile) throws Exception {
 		if (logger.isInfoEnabled()) {
-			logger.info("HttpUtil get url:" + url);
+			logger.info("HttpUtils download file from url：" + url);
 		}
 
 		HttpGet httpGet = new HttpGet(url);
@@ -155,7 +155,7 @@ public class HttpUtils {
 			// System.out.println("Local cookie: " + cookies.get(i));
 			// }
 		} catch (Exception e) {
-			logger.error("HttpUtil post url failed:" + url, e);
+			logger.error("HttpUtils post url failed：" + url, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -187,15 +187,15 @@ public class HttpUtils {
 		try {
 			// InputStream is = response.getEntity().getContent();
 			// StreamUtils.stream2str(is, encoder).trim();
-			if (logger.isInfoEnabled()) {
+			if (logger.isDebugEnabled()) {
 				List<Cookie> cookies = cookieStore.getCookies();
 				for (int i = 0; i < cookies.size(); i++) {
-					logger.info("show cookie: " + cookies.get(i));
+					logger.debug("show cookie： " + cookies.get(i));
 				}
 			}
 
 		} catch (Exception e) {
-			logger.error("HttpUtil post failed:" + postUrl, e);
+			logger.error("HttpUtils post failed：" + postUrl, e);
 			return null;
 		} finally {
 			StreamUtils.closeStream(response);
@@ -209,7 +209,7 @@ public class HttpUtils {
 			is = response.getEntity().getContent();
 			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
 		} catch (Exception e) {
-			logger.error("HttpUtil get falied:" + getUrl, e);
+			logger.error("HttpUtils get falied：" + getUrl, e);
 		} finally {
 			StreamUtils.closeStream(is);
 			StreamUtils.closeStream(response);
@@ -239,22 +239,31 @@ public class HttpUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// if (true) {
-		// logger.setLevel(Level.INFO);
-		// Map<String, String> bodyMap = new HashMap<String, String>();
-		//
-		// Map<String, String> headMap = new HashMap<String, String>();
-		// headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
-		// String data = postAndGetData("http://www.tvmao.com/servlet/login",
-		// "http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-		// CharSetConst.UTF_8, headMap, bodyMap);
-		// System.out.println(data);
-		// System.out.println("=============================");
-		//
-		// data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-		// CharSetConst.UTF_8, headMap);
-		// System.out.println(data);
-		// return;
-		// }
+		if (false) {
+			Map<String, String> bodyMap = new HashMap<String, String>();
+
+			Map<String, String> headMap = new HashMap<String, String>();
+			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
+			String data = postAndGetData("http://www.tvmao.com/servlet/login",
+					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
+					CharSetConst.UTF_8, headMap, bodyMap);
+			System.out.println(data);
+			System.out.println("=============================");
+
+			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
+					CharSetConst.UTF_8, headMap);
+			System.out.println(data);
+			return;
+		}
+		HashMap<String, String> bodyMap = new HashMap<String, String>();
+		bodyMap.put("username", "qwe4087731@126.com");
+		bodyMap.put("password", "466284796a");
+		bodyMap.put("appid", "on");
+		postData("https://kyfw.12306.cn/passport/web/login", "utf-8", null,
+				null);
+
+		String data = getData(
+				"http://kyfw.12306.cn/passport/captcha/captcha-image", "utf-8");
+		System.out.println(data);
 	}
 }
