@@ -25,7 +25,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.phoenix.common.constant.CharSetConst;
 
@@ -240,22 +239,22 @@ public class HttpUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (true) {
-			logger.setLevel(Level.INFO);
-			Map<String, String> bodyMap = new HashMap<String, String>();
-
-			Map<String, String> headMap = new HashMap<String, String>();
-			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
-			String data = postAndGetData("http://www.tvmao.com/servlet/login",
-					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					CharSetConst.UTF_8, headMap, bodyMap);
-			System.out.println(data);
-			System.out.println("=============================");
-
-			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					CharSetConst.UTF_8, headMap);
-			System.out.println(data);
-			return;
-		}
+		// if (true) {
+		// logger.setLevel(Level.INFO);
+		// Map<String, String> bodyMap = new HashMap<String, String>();
+		//
+		// Map<String, String> headMap = new HashMap<String, String>();
+		// headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
+		// String data = postAndGetData("http://www.tvmao.com/servlet/login",
+		// "http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
+		// CharSetConst.UTF_8, headMap, bodyMap);
+		// System.out.println(data);
+		// System.out.println("=============================");
+		//
+		// data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
+		// CharSetConst.UTF_8, headMap);
+		// System.out.println(data);
+		// return;
+		// }
 	}
 }
