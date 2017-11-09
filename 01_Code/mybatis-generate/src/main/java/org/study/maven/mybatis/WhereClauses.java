@@ -15,6 +15,13 @@ public class WhereClauses {
 	}
 
 	public WhereClauses addWhereClause(WhereClause whereClause) {
+		if (whereClause.fieldName == null
+				|| whereClause.fieldName.length() <= 0
+				|| whereClause.condition == null
+				|| whereClause.condition.length() <= 0) {
+			throw new RuntimeException(
+					"Value for fieldName or condition cannot be null");
+		}
 		andWhereClauselist.add(whereClause);
 		return this;
 	}

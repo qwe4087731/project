@@ -1,5 +1,6 @@
 package org.study.maven.mybatis;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -14,6 +15,11 @@ import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.Method;
 import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.xml.Attribute;
+import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.TextElement;
+import org.mybatis.generator.api.dom.xml.XmlElement;
+import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
 
 public class PaginationPlugin extends PluginAdapter {
 
@@ -191,6 +197,7 @@ public class PaginationPlugin extends PluginAdapter {
 		return super.clientGenerated(interfaze, topLevelClass,
 				introspectedTable);
 	}
+
 	// @Override
 	// public boolean modelFieldGenerated(Field field,
 	// TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
@@ -224,4 +231,105 @@ public class PaginationPlugin extends PluginAdapter {
 	// topLevelClass.addMethod(method);
 	// }
 
+	@Override
+	public boolean sqlMapDocumentGenerated(Document document,
+			IntrospectedTable introspectedTable) {
+		StringBuilder sb = new StringBuilder();
+
+		XmlElement answer = new XmlElement("select");
+		context.getCommentGenerator().addComment(answer);
+
+		answer.addAttribute(new Attribute("id", "selectByCriterion"));
+		answer.addAttribute(new Attribute("parameterType",
+				"org.study.maven.mybatis.SelectCriterion"));
+		answer.addAttribute(new Attribute("resultMap", introspectedTable
+				.getBaseResultMapId()));
+		answer.addElement(new TextElement("select"));
+		XmlElement ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+		XmlElement chooseElement = new XmlElement("choose");
+		answer.addElement(chooseElement);
+		answer.addElement(new TextElement("from "
+				+ introspectedTable
+						.getAliasedFullyQualifiedTableNameAtRuntime()));
+
+		ifElement.addAttribute(new Attribute("test", "distinct"));
+		ifElement.addElement(new TextElement("distinct"));
+
+		XmlElement whenElement = new XmlElement("when");
+		chooseElement.addElement(whenElement);
+		XmlElement otherwiseElement = new XmlElement("otherwise");
+		chooseElement.addElement(otherwiseElement);
+
+		XmlElement foreachElement = new XmlElement("foreach");
+		whenElement.addElement(foreachElement);
+		whenElement.addAttribute(new Attribute("test",
+				"selectiveColumnlist.size() != 0"));
+
+		sb.setLength(0);
+		Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
+				.iterator();
+		while (iter.hasNext()) {
+			sb.append(MyBatis3FormattingUtilities.getSelectListPhrase(iter
+					.next()));
+
+			if (iter.hasNext()) {
+				sb.append(", ");
+			}
+
+			if (sb.length() > 80) {
+				otherwiseElement.addElement(new TextElement(sb.toString()));
+				sb.setLength(0);
+			}
+		}
+
+		if (sb.length() > 0) {
+			otherwiseElement.addElement((new TextElement(sb.toString())));
+		}
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"selectiveColumnlist"));
+		foreachElement.addAttribute(new Attribute("item", "column"));
+		foreachElement.addAttribute(new Attribute("separator", ","));
+		foreachElement.addElement(new TextElement("${column}"));
+
+		XmlElement whereElement = new XmlElement("where");
+		answer.addElement(whereElement);
+
+		ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+		ifElement.addAttribute(new Attribute("test",
+				"orderByClause != null and orderByClause != ''"));
+		ifElement.addElement(new TextElement("order by ${orderByClause}"));
+
+		ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+		ifElement.addAttribute(new Attribute("test", "length != 0"));
+		ifElement.addElement(new TextElement("limit ${begin}, ${length}"));
+
+		foreachElement = new XmlElement("foreach");
+		whereElement.addElement(foreachElement);
+
+		XmlElement trimElement = new XmlElement("trim");
+		foreachElement.addElement(trimElement);
+		foreachElement.addAttribute(new Attribute("collection",
+				"orWhereClausesList"));
+		foreachElement.addAttribute(new Attribute("item", "whereclauses"));
+		foreachElement.addAttribute(new Attribute("separator", "or"));
+
+		trimElement.addAttribute(new Attribute("prefix", "("));
+		trimElement.addAttribute(new Attribute("prefixOverrides", "and"));
+		trimElement.addAttribute(new Attribute("suffix", ")"));
+		foreachElement = new XmlElement("foreach");
+		trimElement.addElement(foreachElement);
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"whereclauses.andWhereClauselist"));
+		foreachElement.addAttribute(new Attribute("item", "whereclause"));
+		foreachElement
+				.addElement(new TextElement(
+						"and ${wherclause.fieldName} ${wherclause.condition} #{wherclause.fieldValue}"));
+		document.getRootElement().addElement(answer);
+		return super.sqlMapDocumentGenerated(document, introspectedTable);
+	}
 }
