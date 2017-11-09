@@ -1,13 +1,18 @@
 package org.study.maven.mybatis;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BaseCriterion extends Criterion {
-	public String getWhereClause() {
-		return whereClause;
+	// 通常一个
+	List<WhereClauses> orWhereClausesList = null;
+
+	public BaseCriterion() {
+		orWhereClausesList = new ArrayList<WhereClauses>();
 	}
 
-	public void setWhereClause(String whereClause) {
-		this.whereClause = whereClause;
+	public WhereClauses addOrWhereClauses(WhereClauses whereClauses) {
+		orWhereClausesList.add(whereClauses);
+		return whereClauses;
 	}
-
-	protected String whereClause;
 }
