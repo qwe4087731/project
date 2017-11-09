@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WhereClauses {
-	List<WhereClause> andWhereClauselist = null;
+	private List<WhereClause> andWhereClauselist = null;
 
 	public WhereClauses() {
 		andWhereClauselist = new ArrayList<WhereClause>();
+	}
+
+	public List<WhereClause> getAndWhereClauselist() {
+		return andWhereClauselist;
 	}
 
 	public WhereClauses addWhereClause(WhereClause whereClause) {
@@ -15,15 +19,15 @@ public class WhereClauses {
 		return this;
 	}
 
-	public class WhereClause {
+	public static class WhereClause {
 		private String fieldName;
 		private String condition;
-		private String fieldValue;
+		private Object fieldValue;
 
 		public WhereClause() {
 		}
 
-		public WhereClause(String fieldName, String condition, String fieldValue) {
+		public WhereClause(String fieldName, String condition, Object fieldValue) {
 			super();
 			this.fieldName = fieldName;
 			this.condition = condition;
@@ -46,7 +50,7 @@ public class WhereClauses {
 			this.condition = condition;
 		}
 
-		public String getFieldValue() {
+		public Object getFieldValue() {
 			return fieldValue;
 		}
 

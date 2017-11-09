@@ -5,10 +5,14 @@ import java.util.List;
 
 public class BaseCriterion extends Criterion {
 	// 通常一个
-	List<WhereClauses> orWhereClausesList = null;
+	protected List<WhereClauses> orWhereClausesList = null;
 
 	public BaseCriterion() {
 		orWhereClausesList = new ArrayList<WhereClauses>();
+	}
+
+	public List<WhereClauses> getOrWhereClausesList() {
+		return orWhereClausesList;
 	}
 
 	public WhereClauses addOrWhereClauses(WhereClauses whereClauses) {
