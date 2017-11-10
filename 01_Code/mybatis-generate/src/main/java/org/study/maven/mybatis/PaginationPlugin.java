@@ -234,10 +234,87 @@ public class PaginationPlugin extends PluginAdapter {
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document,
 			IntrospectedTable introspectedTable) {
+		selectSql(document, introspectedTable);
+		updateSql(document, introspectedTable);
+		select(document, introspectedTable);
+		count(document, introspectedTable);
+		update(document, introspectedTable);
+		return super.sqlMapDocumentGenerated(document, introspectedTable);
+	}
+
+	private void selectSql(Document document,
+			IntrospectedTable introspectedTable) {
+		XmlElement answer = new XmlElement("sql");
+		document.getRootElement().addElement(answer);
+
+		answer.addAttribute(new Attribute("id", "Criterion_Where_Clause"));
+		XmlElement whereElement = new XmlElement("where");
+		answer.addElement(whereElement);
+
+		XmlElement foreachElement = new XmlElement("foreach");
+		whereElement.addElement(foreachElement);
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"orWhereClausesList"));
+		foreachElement.addAttribute(new Attribute("item", "whereclauses"));
+		foreachElement.addAttribute(new Attribute("separator", "or"));
+		XmlElement trimElement = new XmlElement("trim");
+		foreachElement.addElement(trimElement);
+
+		trimElement.addAttribute(new Attribute("prefix", "("));
+		trimElement.addAttribute(new Attribute("prefixOverrides", "and"));
+		trimElement.addAttribute(new Attribute("suffix", ")"));
+		foreachElement = new XmlElement("foreach");
+		trimElement.addElement(foreachElement);
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"whereclauses.andWhereClauselist"));
+		foreachElement.addAttribute(new Attribute("item", "whereclause"));
+		foreachElement
+				.addElement(new TextElement(
+						"and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}"));
+	}
+
+	private void updateSql(Document document,
+			IntrospectedTable introspectedTable) {
+		XmlElement answer = new XmlElement("sql");
+		document.getRootElement().addElement(answer);
+
+		answer.addAttribute(new Attribute("id", "Update_Criterion_Where_Clause"));
+		XmlElement whereElement = new XmlElement("where");
+		answer.addElement(whereElement);
+
+		XmlElement foreachElement = new XmlElement("foreach");
+		whereElement.addElement(foreachElement);
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"criterion.orWhereClausesList"));
+		foreachElement.addAttribute(new Attribute("item", "whereclauses"));
+		foreachElement.addAttribute(new Attribute("separator", "or"));
+		XmlElement trimElement = new XmlElement("trim");
+		foreachElement.addElement(trimElement);
+
+		trimElement.addAttribute(new Attribute("prefix", "("));
+		trimElement.addAttribute(new Attribute("prefixOverrides", "and"));
+		trimElement.addAttribute(new Attribute("suffix", ")"));
+		foreachElement = new XmlElement("foreach");
+		trimElement.addElement(foreachElement);
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"whereclauses.andWhereClauselist"));
+		foreachElement.addAttribute(new Attribute("item", "whereclause"));
+		foreachElement
+				.addElement(new TextElement(
+						"and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}"));
+	}
+
+	private void select(Document document, IntrospectedTable introspectedTable) {
 		StringBuilder sb = new StringBuilder();
+		String tableName = introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime();
 
 		XmlElement answer = new XmlElement("select");
-		context.getCommentGenerator().addComment(answer);
+		document.getRootElement().addElement(answer);
 
 		answer.addAttribute(new Attribute("id", "selectByCriterion"));
 		answer.addAttribute(new Attribute("parameterType",
@@ -247,24 +324,28 @@ public class PaginationPlugin extends PluginAdapter {
 		answer.addElement(new TextElement("select"));
 		XmlElement ifElement = new XmlElement("if");
 		answer.addElement(ifElement);
-		XmlElement chooseElement = new XmlElement("choose");
-		answer.addElement(chooseElement);
-		answer.addElement(new TextElement("from "
-				+ introspectedTable
-						.getAliasedFullyQualifiedTableNameAtRuntime()));
 
 		ifElement.addAttribute(new Attribute("test", "distinct"));
 		ifElement.addElement(new TextElement("distinct"));
+
+		XmlElement chooseElement = new XmlElement("choose");
+		answer.addElement(chooseElement);
 
 		XmlElement whenElement = new XmlElement("when");
 		chooseElement.addElement(whenElement);
 		XmlElement otherwiseElement = new XmlElement("otherwise");
 		chooseElement.addElement(otherwiseElement);
 
+		whenElement.addAttribute(new Attribute("test",
+				"_parameter != null and selectiveColumnlist.size() != 0"));
 		XmlElement foreachElement = new XmlElement("foreach");
 		whenElement.addElement(foreachElement);
-		whenElement.addAttribute(new Attribute("test",
-				"selectiveColumnlist.size() != 0"));
+
+		foreachElement.addAttribute(new Attribute("collection",
+				"selectiveColumnlist"));
+		foreachElement.addAttribute(new Attribute("item", "column"));
+		foreachElement.addAttribute(new Attribute("separator", ","));
+		foreachElement.addElement(new TextElement("${column}"));
 
 		sb.setLength(0);
 		Iterator<IntrospectedColumn> iter = introspectedTable.getAllColumns()
@@ -287,14 +368,17 @@ public class PaginationPlugin extends PluginAdapter {
 			otherwiseElement.addElement((new TextElement(sb.toString())));
 		}
 
-		foreachElement.addAttribute(new Attribute("collection",
-				"selectiveColumnlist"));
-		foreachElement.addAttribute(new Attribute("item", "column"));
-		foreachElement.addAttribute(new Attribute("separator", ","));
-		foreachElement.addElement(new TextElement("${column}"));
+		answer.addElement(new TextElement("from " + tableName));
 
-		XmlElement whereElement = new XmlElement("where");
-		answer.addElement(whereElement);
+		ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+
+		ifElement.addAttribute(new Attribute("test", "_parameter != null "));
+		XmlElement includeElement = new XmlElement("include");
+		ifElement.addElement(includeElement);
+
+		includeElement.addAttribute(new Attribute("refid",
+				"Criterion_Where_Clause"));
 
 		ifElement = new XmlElement("if");
 		answer.addElement(ifElement);
@@ -304,32 +388,101 @@ public class PaginationPlugin extends PluginAdapter {
 
 		ifElement = new XmlElement("if");
 		answer.addElement(ifElement);
-		ifElement.addAttribute(new Attribute("test", "length != 0"));
+
+		ifElement.addAttribute(new Attribute("test",
+				"_parameter != null and length != 0"));
 		ifElement.addElement(new TextElement("limit ${begin}, ${length}"));
+	}
 
-		foreachElement = new XmlElement("foreach");
-		whereElement.addElement(foreachElement);
+	private void count(Document document, IntrospectedTable introspectedTable) {
+		String tableName = introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime();
 
-		XmlElement trimElement = new XmlElement("trim");
-		foreachElement.addElement(trimElement);
-		foreachElement.addAttribute(new Attribute("collection",
-				"orWhereClausesList"));
-		foreachElement.addAttribute(new Attribute("item", "whereclauses"));
-		foreachElement.addAttribute(new Attribute("separator", "or"));
-
-		trimElement.addAttribute(new Attribute("prefix", "("));
-		trimElement.addAttribute(new Attribute("prefixOverrides", "and"));
-		trimElement.addAttribute(new Attribute("suffix", ")"));
-		foreachElement = new XmlElement("foreach");
-		trimElement.addElement(foreachElement);
-
-		foreachElement.addAttribute(new Attribute("collection",
-				"whereclauses.andWhereClauselist"));
-		foreachElement.addAttribute(new Attribute("item", "whereclause"));
-		foreachElement
-				.addElement(new TextElement(
-						"and ${wherclause.fieldName} ${wherclause.condition} #{wherclause.fieldValue}"));
+		XmlElement answer = new XmlElement("select");
 		document.getRootElement().addElement(answer);
-		return super.sqlMapDocumentGenerated(document, introspectedTable);
+
+		answer.addAttribute(new Attribute("id", "countByCriterion"));
+		answer.addAttribute(new Attribute("parameterType",
+				"org.study.maven.mybatis.CountCriterion"));
+		answer.addAttribute(new Attribute("resultType", "java.lang.Integer"));
+		answer.addElement(new TextElement("select count(*) from " + tableName));
+		XmlElement ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+
+		ifElement.addAttribute(new Attribute("test", "_parameter != null "));
+
+		XmlElement includeElement = new XmlElement("include");
+		ifElement.addElement(includeElement);
+
+		includeElement.addAttribute(new Attribute("refid",
+				"Criterion_Where_Clause"));
+	}
+
+	private void update(Document document, IntrospectedTable introspectedTable) {
+		String tableName = introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime();
+
+		XmlElement answer = new XmlElement("update");
+		document.getRootElement().addElement(answer);
+
+		answer.addAttribute(new Attribute("id", "updateByCriterion"));
+		answer.addAttribute(new Attribute("parameterType", "map"));
+		answer.addElement(new TextElement("update " + tableName));
+		XmlElement setElement = new XmlElement("set");
+		answer.addElement(setElement);
+
+		for (IntrospectedColumn introspectedColumn : introspectedTable
+				.getAllColumns()) {
+			XmlElement ifElement = new XmlElement("if");
+			setElement.addElement(ifElement);
+
+			ifElement.addAttribute(new Attribute("test", introspectedColumn
+					.getJavaProperty("record.") + " != null"));
+			ifElement.addElement(new TextElement(MyBatis3FormattingUtilities
+					.getAliasedEscapedColumnName(introspectedColumn)
+					+ " = "
+					+ MyBatis3FormattingUtilities.getParameterClause(
+							introspectedColumn, "record.") + ","));
+		}
+		XmlElement chooseElement = new XmlElement("choose");
+		answer.addElement(chooseElement);
+
+		XmlElement whenElement = new XmlElement("when");
+		XmlElement otherwiseElement = new XmlElement("otherwise");
+		chooseElement.addElement(whenElement);
+		chooseElement.addElement(otherwiseElement);
+
+		XmlElement ifElement = new XmlElement("if");
+		otherwiseElement.addElement(ifElement);
+
+		ifElement.addAttribute(new Attribute("test",
+				"criterion.orWhereClausesList.size() > 0"));
+		ifElement.addElement(new TextElement("error"));
+
+		whenElement.addAttribute(new Attribute("test",
+				"criterion != null and !criterion.isAll"));
+		chooseElement = new XmlElement("choose");
+		whenElement.addElement(chooseElement);
+
+		// otherwiseElement = new XmlElement("otherwise");
+		// whenElement.addElement(otherwiseElement);
+
+		whenElement = new XmlElement("when");
+		chooseElement.addElement(whenElement);
+		otherwiseElement = new XmlElement("otherwise");
+		chooseElement.addElement(otherwiseElement);
+
+		whenElement
+				.addAttribute(new Attribute(
+						"test",
+						"criterion.orWhereClausesList.size() != 0 and criterion.orWhereClausesList.get(0).andWhereClauselist.size() != 0"));
+		XmlElement includeElement = new XmlElement("include");
+		whenElement.addElement(includeElement);
+
+		includeElement.addAttribute(new Attribute("refid",
+				"Update_Criterion_Where_Clause"));
+
+		otherwiseElement.addElement(new TextElement("error"));
+
 	}
 }
