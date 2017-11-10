@@ -239,6 +239,7 @@ public class PaginationPlugin extends PluginAdapter {
 		select(document, introspectedTable);
 		count(document, introspectedTable);
 		update(document, introspectedTable);
+		delete(document, introspectedTable);
 		return super.sqlMapDocumentGenerated(document, introspectedTable);
 	}
 
@@ -421,7 +422,6 @@ public class PaginationPlugin extends PluginAdapter {
 	private void update(Document document, IntrospectedTable introspectedTable) {
 		String tableName = introspectedTable
 				.getAliasedFullyQualifiedTableNameAtRuntime();
-
 		XmlElement answer = new XmlElement("update");
 		document.getRootElement().addElement(answer);
 
@@ -444,45 +444,65 @@ public class PaginationPlugin extends PluginAdapter {
 					+ MyBatis3FormattingUtilities.getParameterClause(
 							introspectedColumn, "record.") + ","));
 		}
+
+		XmlElement ifElement = new XmlElement("if");
+		answer.addElement(ifElement);
+
+		ifElement.addAttribute(new Attribute("test", "criterion != null"));
 		XmlElement chooseElement = new XmlElement("choose");
-		answer.addElement(chooseElement);
+		ifElement.addElement(chooseElement);
 
 		XmlElement whenElement = new XmlElement("when");
 		XmlElement otherwiseElement = new XmlElement("otherwise");
 		chooseElement.addElement(whenElement);
 		chooseElement.addElement(otherwiseElement);
 
+		whenElement
+				.addAttribute(new Attribute(
+						"test",
+						"criterion.orWhereClausesList.size() == 0 || criterion.orWhereClausesList.get(0).andWhereClauselist.size() == 0"));
+		whenElement.addElement(new TextElement("error"));
+
+		XmlElement includeElement = new XmlElement("include");
+		otherwiseElement.addElement(includeElement);
+
+		includeElement.addAttribute(new Attribute("refid",
+				"Update_Criterion_Where_Clause"));
+	}
+
+	private void delete(Document document, IntrospectedTable introspectedTable) {
+		String tableName = introspectedTable
+				.getAliasedFullyQualifiedTableNameAtRuntime();
+		XmlElement answer = new XmlElement("delete");
+		document.getRootElement().addElement(answer);
+
+		answer.addAttribute(new Attribute("id", "deleteByCriterion"));
+		answer.addAttribute(new Attribute("parameterType",
+				"org.study.maven.mybatis.DeleteCriterion"));
+		answer.addElement(new TextElement("delete from " + tableName));
+
 		XmlElement ifElement = new XmlElement("if");
-		otherwiseElement.addElement(ifElement);
+		answer.addElement(ifElement);
 
-		ifElement.addAttribute(new Attribute("test",
-				"criterion.orWhereClausesList.size() > 0"));
-		ifElement.addElement(new TextElement("error"));
+		ifElement.addAttribute(new Attribute("test", "_parameter != null"));
+		XmlElement chooseElement = new XmlElement("choose");
+		ifElement.addElement(chooseElement);
 
-		whenElement.addAttribute(new Attribute("test",
-				"criterion != null and !criterion.isAll"));
-		chooseElement = new XmlElement("choose");
-		whenElement.addElement(chooseElement);
-
-		// otherwiseElement = new XmlElement("otherwise");
-		// whenElement.addElement(otherwiseElement);
-
-		whenElement = new XmlElement("when");
+		XmlElement whenElement = new XmlElement("when");
+		XmlElement otherwiseElement = new XmlElement("otherwise");
 		chooseElement.addElement(whenElement);
-		otherwiseElement = new XmlElement("otherwise");
 		chooseElement.addElement(otherwiseElement);
 
 		whenElement
 				.addAttribute(new Attribute(
 						"test",
-						"criterion.orWhereClausesList.size() != 0 and criterion.orWhereClausesList.get(0).andWhereClauselist.size() != 0"));
+						"orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0"));
+		whenElement.addElement(new TextElement("error"));
+
 		XmlElement includeElement = new XmlElement("include");
-		whenElement.addElement(includeElement);
+		otherwiseElement.addElement(includeElement);
 
 		includeElement.addAttribute(new Attribute("refid",
-				"Update_Criterion_Where_Clause"));
-
-		otherwiseElement.addElement(new TextElement("error"));
-
+				"Criterion_Where_Clause"));
 	}
 }
