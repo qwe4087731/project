@@ -14,6 +14,7 @@ public class UserInfo {
     public static final String USER_NAME = "user_name";
 
     public static final String SEX = "sex";
+    
 
     public Integer getUserId() {
         return userId;
