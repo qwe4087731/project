@@ -37,4 +37,7 @@
 		</repository>
 	</repositories>
 
+	<modules>
+		<module>../common-util</module>
+	</modules>
 </project>
