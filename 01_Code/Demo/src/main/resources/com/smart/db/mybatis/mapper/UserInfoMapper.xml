@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smart.db.mybatis.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfo" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Criterion_Where_Clause" >
+    <where >
+      <foreach collection="orWhereClausesList" item="whereclauses" separator="or" >
+        <trim prefix="(" prefixOverrides="and" suffix=")" >
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause" >
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_Criterion_Where_Clause" >
+    <where >
+      <foreach collection="criterion.orWhereClausesList" item="whereclauses" separator="or" >
+        <trim prefix="(" prefixOverrides="and" suffix=")" >
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause" >
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from UserInfo
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfo" >
+    insert into UserInfo (user_id, user_name, sex
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfo" >
+    update UserInfo
+    set user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select user_id, user_name, sex
+    from UserInfo
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select user_id, user_name, sex
+    from UserInfo
+  </select>
+  <select id="selectByCriterion" parameterType="org.phoenix.mybatis.generate.Criterion.SelectCriterion" resultMap="BaseResultMap" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <choose >
+      <when test="_parameter != null and selectiveColumnlist.size() != 0" >
+        <foreach collection="selectiveColumnlist" item="column" separator="," >
+          ${column}
+        </foreach>
+      </when>
+      <otherwise >
+        user_id, user_name, sex
+      </otherwise>
+    </choose>
+    from UserInfo
+    <if test="_parameter != null " >
+      <include refid="Criterion_Where_Clause" />
+    </if>
+    <if test="orderByClause != null and orderByClause != ''" >
+      order by ${orderByClause}
+    </if>
+    <if test="_parameter != null and length != 0" >
+      limit ${begin}, ${length}
+    </if>
+  </select>
+  <select id="countByCriterion" parameterType="org.phoenix.mybatis.generate.Criterion.CountCriterion" resultType="java.lang.Integer" >
+    select count(*) from UserInfo
+    <if test="_parameter != null " >
+      <include refid="Criterion_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriterion" parameterType="map" >
+    update UserInfo
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="criterion != null" >
+      <choose >
+        <when test="criterion.orWhereClausesList.size() == 0 || criterion.orWhereClausesList.get(0).andWhereClauselist.size() == 0" >
+          error
+        </when>
+        <otherwise >
+          <include refid="Update_Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </update>
+  <delete id="deleteByCriterion" parameterType="org.phoenix.mybatis.generate.Criterion.DeleteCriterion" >
+    delete from UserInfo
+    <if test="_parameter != null" >
+      <choose >
+        <when test="orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0" >
+          error
+        </when>
+        <otherwise >
+          <include refid="Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </delete>
+</mapper>
