@@ -48,11 +48,11 @@
 			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 		<!-- targetPackage：mapper接口生成的位置 -->
-		<!-- <javaClientGenerator type="XMLMAPPER"
+		<javaClientGenerator type="XMLMAPPER"
 			targetPackage="com.smart.db.mybatis.dao" targetProject="src/main/java">
-			enableSubPackages:是否让schema作为包的后缀
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
 			<property name="enableSubPackages" value="false" />
-		</javaClientGenerator> -->
+		</javaClientGenerator>
 		<!-- 指定数据库表 -->
 		<!-- <table tableName="ThirdOpenUser" domainObjectName="ThirdOpenUser"></table> 
 			<table tableName="TmpPhoto" domainObjectName="TmpPhoto"></table> <table tableName="TmpPhotoGroup" 
