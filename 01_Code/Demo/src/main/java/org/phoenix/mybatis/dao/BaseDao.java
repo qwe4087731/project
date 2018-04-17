@@ -1,4 +1,4 @@
-package org.phoenix.mybatis.generate.dao;
+package org.phoenix.mybatis.dao;
 
 import java.util.List;
 
