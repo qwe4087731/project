@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.study.mybatis.dao.UserInfoMapper" >
-  <resultMap id="BaseResultMap" type="org.study.mybatis.bean.UserInfo" >
+<mapper namespace="com.smart.db.mybatis.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfo" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="CHAR" />
@@ -32,13 +32,13 @@
     delete from UserInfo
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.study.mybatis.bean.UserInfo" >
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfo" >
     insert into UserInfo (user_id, user_name, sex
       )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="org.study.mybatis.bean.UserInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfo" >
     update UserInfo
     set user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=CHAR}

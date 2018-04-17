@@ -1,4 +1,4 @@
-package org.study.mybatis.bean;
+package com.smart.db.mybatis.bean;
 
 public class UserInfo {
     private Integer userId;
@@ -14,7 +14,6 @@ public class UserInfo {
     public static final String USER_NAME = "user_name";
 
     public static final String SEX = "sex";
-    
 
     public Integer getUserId() {
         return userId;

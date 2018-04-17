@@ -12,8 +12,9 @@ import org.phoenix.mybatis.generate.Criterion.SelectCriterion;
 import org.phoenix.mybatis.generate.Criterion.UpdateCriterion;
 import org.phoenix.mybatis.generate.Criterion.WhereClauses;
 import org.phoenix.mybatis.generate.Criterion.WhereClauses.WhereClause;
-import org.study.mybatis.bean.UserInfo;
-import org.study.mybatis.dao.UserInfoMapper;
+
+import com.smart.db.mybatis.bean.UserInfo;
+import com.smart.db.mybatis.dao.UserInfoMapper;
 
 public class Test {
 	public static void main(String[] args) throws Exception {
