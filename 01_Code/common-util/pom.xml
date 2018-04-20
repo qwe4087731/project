@@ -9,8 +9,8 @@
 
 	<name>common-util</name>
 	<url>http://maven.apache.org</url>
-	
-	
+
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,9 +59,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<parent>
-		<groupId>com.fox</groupId>
-		<artifactId>com.fox.parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
+
 </project>
