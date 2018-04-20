@@ -5,6 +5,8 @@ public class UserInfo {
 
     private String userName;
 
+    private Integer age;
+
     private String sex;
 
     public static final String TABLENAME = "UserInfo";
@@ -12,6 +14,8 @@ public class UserInfo {
     public static final String USER_ID = "user_id";
 
     public static final String USER_NAME = "user_name";
+
+    public static final String AGE = "age";
 
     public static final String SEX = "sex";
 
@@ -31,6 +35,14 @@ public class UserInfo {
         this.userName = userName == null ? null : userName.trim();
     }
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
     public String getSex() {
         return sex;
     }
@@ -47,6 +59,7 @@ public class UserInfo {
         sb.append("Hash = ").append(hashCode());
         sb.append(", userId=").append(userId);
         sb.append(", userName=").append(userName);
+        sb.append(", age=").append(age);
         sb.append(", sex=").append(sex);
         sb.append("]");
         return sb.toString();
@@ -66,6 +79,7 @@ public class UserInfo {
         UserInfo other = (UserInfo) that;
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
+            && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()));
     }
 
@@ -75,6 +89,7 @@ public class UserInfo {
         int result = 1;
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
+        result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
         return result;
     }
