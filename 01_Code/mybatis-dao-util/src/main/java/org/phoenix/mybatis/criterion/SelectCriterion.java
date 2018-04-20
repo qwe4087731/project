@@ -1,4 +1,4 @@
-package org.phoenix.criterion;
+package org.phoenix.mybatis.criterion;
 
 import java.util.ArrayList;
 import java.util.List;

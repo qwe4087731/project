@@ -1,12 +1,12 @@
-package org.phoenix.dao;
+package org.phoenix.mybatis.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.phoenix.criterion.CountCriterion;
-import org.phoenix.criterion.DeleteCriterion;
-import org.phoenix.criterion.SelectCriterion;
-import org.phoenix.criterion.UpdateCriterion;
+import org.phoenix.mybatis.criterion.CountCriterion;
+import org.phoenix.mybatis.criterion.DeleteCriterion;
+import org.phoenix.mybatis.criterion.SelectCriterion;
+import org.phoenix.mybatis.criterion.UpdateCriterion;
 
 public interface BaseDao<T> {
 	int deleteByPrimaryKey(Integer id);
