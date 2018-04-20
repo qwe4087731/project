@@ -7,14 +7,13 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.phoenix.mybatis.generate.Criterion.CountCriterion;
-import org.phoenix.mybatis.generate.Criterion.SelectCriterion;
-import org.phoenix.mybatis.generate.Criterion.UpdateCriterion;
-import org.phoenix.mybatis.generate.Criterion.WhereClauses;
-import org.phoenix.mybatis.generate.Criterion.WhereClauses.WhereClause;
-
-import com.smart.db.mybatis.bean.UserInfo;
-import com.smart.db.mybatis.dao.UserInfoMapper;
+import org.phoenix.mybatis.criterion.CountCriterion;
+import org.phoenix.mybatis.criterion.SelectCriterion;
+import org.phoenix.mybatis.criterion.UpdateCriterion;
+import org.phoenix.mybatis.criterion.WhereClauses;
+import org.phoenix.mybatis.criterion.WhereClauses.WhereClause;
+import org.phonenix.db.mybatis.bean.UserInfo;
+import org.phonenix.db.mybatis.dao.UserInfoMapper;
 
 public class Test {
 	public static void main(String[] args) throws Exception {

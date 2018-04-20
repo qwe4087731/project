@@ -1,4 +1,4 @@
-package org.phoenix.mybatis.generate.Criterion;
+package org.phoenix.mybatis.criterion;
 
 public class DeleteCriterion extends BaseCriterion {
 }

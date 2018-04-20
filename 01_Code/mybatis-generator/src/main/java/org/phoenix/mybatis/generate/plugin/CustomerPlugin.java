@@ -145,13 +145,13 @@ public class CustomerPlugin extends PluginAdapter {
 			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 		Set<FullyQualifiedJavaType> importedTypes = new TreeSet<FullyQualifiedJavaType>();
 		FullyQualifiedJavaType selectType = new FullyQualifiedJavaType(
-				"org.phoenix.mybatis.generate.Criterion.SelectCriterion");
+				"org.phoenix.mybatis.criterion.SelectCriterion");
 		FullyQualifiedJavaType countType = new FullyQualifiedJavaType(
-				"org.phoenix.mybatis.generate.Criterion.CountCriterion");
+				"org.phoenix.mybatis.criterion.CountCriterion");
 		FullyQualifiedJavaType updateType = new FullyQualifiedJavaType(
-				"org.phoenix.mybatis.generate.Criterion.UpdateCriterion");
+				"org.phoenix.mybatis.criterion.UpdateCriterion");
 		FullyQualifiedJavaType deleteType = new FullyQualifiedJavaType(
-				"org.phoenix.mybatis.generate.Criterion.DeleteCriterion");
+				"org.phoenix.mybatis.criterion.DeleteCriterion");
 		importedTypes.add(selectType);
 		importedTypes.add(countType);
 		importedTypes.add(updateType);
@@ -319,7 +319,7 @@ public class CustomerPlugin extends PluginAdapter {
 
 		answer.addAttribute(new Attribute("id", "selectByCriterion"));
 		answer.addAttribute(new Attribute("parameterType",
-				"org.phoenix.mybatis.generate.Criterion.SelectCriterion"));
+				"org.phoenix.mybatis.criterion.SelectCriterion"));
 		answer.addAttribute(new Attribute("resultMap", introspectedTable
 				.getBaseResultMapId()));
 		answer.addElement(new TextElement("select"));
@@ -404,7 +404,7 @@ public class CustomerPlugin extends PluginAdapter {
 
 		answer.addAttribute(new Attribute("id", "countByCriterion"));
 		answer.addAttribute(new Attribute("parameterType",
-				"org.phoenix.mybatis.generate.Criterion.CountCriterion"));
+				"org.phoenix.mybatis.criterion.CountCriterion"));
 		answer.addAttribute(new Attribute("resultType", "java.lang.Integer"));
 		answer.addElement(new TextElement("select count(*) from " + tableName));
 		XmlElement ifElement = new XmlElement("if");
@@ -478,7 +478,7 @@ public class CustomerPlugin extends PluginAdapter {
 
 		answer.addAttribute(new Attribute("id", "deleteByCriterion"));
 		answer.addAttribute(new Attribute("parameterType",
-				"org.phoenix.mybatis.generate.Criterion.DeleteCriterion"));
+				"org.phoenix.mybatis.criterion.DeleteCriterion"));
 		answer.addElement(new TextElement("delete from " + tableName));
 
 		XmlElement ifElement = new XmlElement("if");
