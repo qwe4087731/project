@@ -7,9 +7,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.smart.db.mybatis.bean.UserInfo;
-import com.smart.db.mybatis.service.UserInfoService;
+import com.smart.service.UserInfoService;
 
-@ContextConfiguration("classpath*:/applicationContext.xml")
+@ContextConfiguration("classpath*:/spring/smart-context.xml")
 public class TestCase extends AbstractTransactionalTestNGSpringContextTests {
 	@Autowired
 	private UserInfoService userInfoService;
