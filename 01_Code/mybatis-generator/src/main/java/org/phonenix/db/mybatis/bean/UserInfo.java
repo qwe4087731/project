@@ -1,6 +1,8 @@
 package org.phonenix.db.mybatis.bean;
 
-public class UserInfo {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private Integer userId;
 
     private String userName;
