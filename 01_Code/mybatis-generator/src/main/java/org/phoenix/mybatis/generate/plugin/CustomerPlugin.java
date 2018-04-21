@@ -138,6 +138,10 @@ public class CustomerPlugin extends PluginAdapter {
 					+ "\"");
 			topLevelClass.addField(field);
 		}
+		FullyQualifiedJavaType serializableType = new FullyQualifiedJavaType(
+				"java.io.Serializable");
+		topLevelClass.addSuperInterface(serializableType);
+		topLevelClass.addImportedType(serializableType);
 	}
 
 	@Override
