@@ -6,7 +6,7 @@
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:smart-context.xml</param-value>
+		<param-value>classpath:spring/smart-context.xml</param-value>
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -18,7 +18,7 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-		        classpath:smart-servlet.xml
+		        classpath:spring/smart-servlet.xml
 		    </param-value>
 
 		</init-param>
