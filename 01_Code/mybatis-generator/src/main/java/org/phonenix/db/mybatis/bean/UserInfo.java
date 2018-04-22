@@ -11,7 +11,7 @@ public class UserInfo implements Serializable {
 
     private String sex;
 
-    public static final String TABLENAME = "UserInfo";
+    public static final String TABLENAME = "user_info";
 
     public static final String USER_ID = "user_id";
 

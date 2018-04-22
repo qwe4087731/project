@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.smart.db.mybatis.dao.UserInfoDao" >
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfo" >
+<mapper namespace="org.phonenix.db.mybatis.dao.UserInfoDao" >
+  <resultMap id="BaseResultMap" type="org.phonenix.db.mybatis.bean.UserInfo" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
@@ -30,17 +30,17 @@
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from UserInfo
+    delete from user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfo" >
-    insert into UserInfo (user_id, user_name, age, 
+  <insert id="insert" parameterType="org.phonenix.db.mybatis.bean.UserInfo" >
+    insert into user_info (user_id, user_name, age, 
       sex)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{sex,jdbcType=CHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfo" >
-    update UserInfo
+  <update id="updateByPrimaryKey" parameterType="org.phonenix.db.mybatis.bean.UserInfo" >
+    update user_info
     set user_name = #{userName,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
       sex = #{sex,jdbcType=CHAR}
@@ -48,12 +48,12 @@
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select user_id, user_name, age, sex
-    from UserInfo
+    from user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select user_id, user_name, age, sex
-    from UserInfo
+    from user_info
   </select>
   <select id="selectByCriterion" parameterType="org.phoenix.mybatis.criterion.SelectCriterion" resultMap="BaseResultMap" >
     select
@@ -70,7 +70,7 @@
         user_id, user_name, age, sex
       </otherwise>
     </choose>
-    from UserInfo
+    from user_info
     <if test="_parameter != null " >
       <include refid="Criterion_Where_Clause" />
     </if>
@@ -82,13 +82,13 @@
     </if>
   </select>
   <select id="countByCriterion" parameterType="org.phoenix.mybatis.criterion.CountCriterion" resultType="java.lang.Integer" >
-    select count(*) from UserInfo
+    select count(*) from user_info
     <if test="_parameter != null " >
       <include refid="Criterion_Where_Clause" />
     </if>
   </select>
   <update id="updateByCriterion" parameterType="map" >
-    update UserInfo
+    update user_info
     <set >
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=INTEGER},
@@ -115,7 +115,7 @@
     </if>
   </update>
   <delete id="deleteByCriterion" parameterType="org.phoenix.mybatis.criterion.DeleteCriterion" >
-    delete from UserInfo
+    delete from user_info
     <if test="_parameter != null" >
       <choose >
         <when test="orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0" >
