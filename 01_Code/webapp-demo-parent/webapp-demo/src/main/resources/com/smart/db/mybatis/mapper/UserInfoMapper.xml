@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.phonenix.db.mybatis.dao.UserInfoDao" >
-  <resultMap id="BaseResultMap" type="org.phonenix.db.mybatis.bean.UserInfo" >
+<mapper namespace="com.smart.db.mybatis.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfo" >
     <id column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="age" property="age" jdbcType="INTEGER" />
@@ -33,13 +33,13 @@
     delete from user_info
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="org.phonenix.db.mybatis.bean.UserInfo" >
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfo" >
     insert into user_info (user_id, user_name, age, 
       sex)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
       #{sex,jdbcType=CHAR})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="org.phonenix.db.mybatis.bean.UserInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfo" >
     update user_info
     set user_name = #{userName,jdbcType=VARCHAR},
       age = #{age,jdbcType=INTEGER},
