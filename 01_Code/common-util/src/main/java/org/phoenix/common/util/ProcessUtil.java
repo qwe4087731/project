@@ -5,23 +5,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.commons.lang3.SystemUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class ProcessUtils {
-	private static Logger logger = Logger.getLogger(ProcessUtils.class);
+public class ProcessUtil {
+	private static Logger logger = LoggerFactory.getLogger(ProcessUtil.class);
 
-	public static int exec(String command, StringBuilder outBuf,
-			StringBuilder errBuf) {
+	public static int exec(String command, StringBuilder outBuf, StringBuilder errBuf) {
 		return exec(command, outBuf, errBuf, true);
 	}
 
-	public static int exec(String command, StringBuilder outBuf,
-			StringBuilder errBuf, boolean wait) {
+	public static int exec(String command, StringBuilder outBuf, StringBuilder errBuf, boolean wait) {
 		return exec(command, outBuf, errBuf, wait, null);
 	}
 
-	public static int exec(String command, StringBuilder outBuf,
-			StringBuilder errBuf, boolean wait, String charset) {
+	public static int exec(String command, StringBuilder outBuf, StringBuilder errBuf, boolean wait, String charset) {
 		// for /L %%i in (1,1,100000) do fs 1231 save .bat for test,stdout and
 		// stder include
 		int retCode = -1;
@@ -103,12 +101,10 @@ public class ProcessUtils {
 		return retCode;
 	}
 
-	private static void streamToBuf(InputStream is, Appendable buf,
-			String charset) {
+	private static void streamToBuf(InputStream is, Appendable buf, String charset) {
 		BufferedReader br = null;
 		try {
-			InputStreamReader isr = charset == null ? new InputStreamReader(is)
-					: new InputStreamReader(is, charset);
+			InputStreamReader isr = charset == null ? new InputStreamReader(is) : new InputStreamReader(is, charset);
 			br = new BufferedReader(isr);
 			String line = null;
 			while ((line = br.readLine()) != null) {

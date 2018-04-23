@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StreamUtils {
-	private static final Logger logger = Logger.getLogger(StreamUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(StreamUtils.class);
 	private static final int DEFAULT_BUFFER_SIZE = 1024;
 
-	public static String stream2str(InputStream is, String encoder)
-			throws Exception {
+	public static String stream2str(InputStream is, String encoder) throws Exception {
 		ByteArrayOutputStream bos = null;
 		String data = null;
 		try {
@@ -27,8 +27,7 @@ public class StreamUtils {
 		return data;
 	}
 
-	public static void is2os(InputStream bis, OutputStream bos)
-			throws Exception {
+	public static void is2os(InputStream bis, OutputStream bos) throws Exception {
 		byte[] buf = new byte[DEFAULT_BUFFER_SIZE];
 		while (true) {
 			int b = bis.read(buf, 0, DEFAULT_BUFFER_SIZE);

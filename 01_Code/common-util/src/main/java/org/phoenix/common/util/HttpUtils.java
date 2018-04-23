@@ -25,12 +25,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.log4j.Logger;
-import org.phoenix.common.constant.CharSetConst;
+import org.phoenix.common.constant.CharSetConsts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //httpclient本来是commons下的一个子项目，后来由于是HTTP相关部分，所以被移到HttpComponents里去了。 
 public class HttpUtils {
-	private static Logger logger = Logger.getLogger(HttpUtils.class);
+	private static Logger logger = LoggerFactory.getLogger(HttpUtils.class);
 
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
@@ -44,23 +45,19 @@ public class HttpUtils {
 
 	// dns找不到不会报连接超时
 	// setConnectTimeout是建立与服务器的连接之前的超时,从连接管理器(连接池)请求连接时使用的是ConnectionRequestTimeout
-	private static RequestConfig requestConfig = RequestConfig.custom()
-			.setCookieSpec(CookieSpecs.DEFAULT).setSocketTimeout(5000)
-			.setConnectTimeout(3000).setConnectionRequestTimeout(3000).build();
-	private static CloseableHttpClient httpClient = HttpClients.custom()
-			.setDefaultRequestConfig(requestConfig).build();
+	private static RequestConfig requestConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.DEFAULT)
+			.setSocketTimeout(5000).setConnectTimeout(3000).setConnectionRequestTimeout(3000).build();
+	private static CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
 	public static String getData(String url, String encoder) throws Exception {
 		return getData(url, encoder, pc_ieEdgeUserAgent);
 	}
 
-	public static String getData(String url, String encoder, String userAgent)
-			throws Exception {
+	public static String getData(String url, String encoder, String userAgent) throws Exception {
 		return getData(url, encoder, userAgent, null);
 	}
 
-	public static String getData(String url, String encoder, String userAgent,
-			String referer) throws Exception {
+	public static String getData(String url, String encoder, String userAgent, String referer) throws Exception {
 		Map<String, String> headerMap = new HashMap<String, String>();
 		if (userAgent != null) {
 			headerMap.put(USER_AGENT, userAgent);
@@ -72,8 +69,7 @@ public class HttpUtils {
 		return getData(url, encoder, headerMap);
 	}
 
-	public static String getData(String url, String encoder,
-			Map<String, String> headerMap) throws Exception {
+	public static String getData(String url, String encoder, Map<String, String> headerMap) throws Exception {
 		if (logger.isInfoEnabled()) {
 			logger.info("HttpUtils get url：" + url);
 		}
@@ -132,9 +128,8 @@ public class HttpUtils {
 		}
 	}
 
-	public static String postData(String url, String encoder,
-			HashMap<String, String> headerMap, Map<String, String> bodyMap)
-			throws Exception {
+	public static String postData(String url, String encoder, HashMap<String, String> headerMap,
+			Map<String, String> bodyMap) throws Exception {
 		HttpPost httpPost = new HttpPost(url);
 		setHttpHeader(httpPost, headerMap);
 		setHttpBody(httpPost, bodyMap);
@@ -173,8 +168,7 @@ public class HttpUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String postAndGetData(String postUrl, String getUrl,
-			String encoder, Map<String, String> headerMap,
+	public static String postAndGetData(String postUrl, String getUrl, String encoder, Map<String, String> headerMap,
 			Map<String, String> bodyMap) throws Exception {
 		HttpPost httpPost = new HttpPost(postUrl);
 		setHttpHeader(httpPost, headerMap);
@@ -207,7 +201,7 @@ public class HttpUtils {
 		try {
 			response = httpClient.execute(httpGet, context);
 			is = response.getEntity().getContent();
-			return StreamUtils.stream2str(is, CharSetConst.UTF_8).trim();
+			return StreamUtils.stream2str(is, CharSetConsts.UTF_8).trim();
 		} catch (Exception e) {
 			logger.error("HttpUtils get falied：" + getUrl, e);
 		} finally {
@@ -217,8 +211,7 @@ public class HttpUtils {
 		return null;
 	}
 
-	private static void setHttpHeader(AbstractHttpMessage request,
-			Map<String, String> headerMap) {
+	private static void setHttpHeader(AbstractHttpMessage request, Map<String, String> headerMap) {
 		if (headerMap != null) {
 			for (Map.Entry<String, String> entry : headerMap.entrySet()) {
 				request.setHeader(entry.getKey(), entry.getValue());
@@ -226,15 +219,12 @@ public class HttpUtils {
 		}
 	}
 
-	private static void setHttpBody(HttpPost httpPost,
-			Map<String, String> bodyMap) {
+	private static void setHttpBody(HttpPost httpPost, Map<String, String> bodyMap) {
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();
 		for (Map.Entry<String, String> entry : bodyMap.entrySet()) {
-			formparams.add(new BasicNameValuePair(entry.getKey(), entry
-					.getValue()));
+			formparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 		}
-		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams,
-				Consts.UTF_8);
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, Consts.UTF_8);
 		httpPost.setEntity(entity);
 	}
 
@@ -245,13 +235,11 @@ public class HttpUtils {
 			Map<String, String> headMap = new HashMap<String, String>();
 			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
 			String data = postAndGetData("http://www.tvmao.com/servlet/login",
-					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					CharSetConst.UTF_8, headMap, bodyMap);
+					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp", CharSetConsts.UTF_8, headMap, bodyMap);
 			System.out.println(data);
 			System.out.println("=============================");
 
-			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp",
-					CharSetConst.UTF_8, headMap);
+			data = getData("http://adm.tvmao.com/xadmin/drama/drama_query.jsp", CharSetConsts.UTF_8, headMap);
 			System.out.println(data);
 			return;
 		}
@@ -259,11 +247,9 @@ public class HttpUtils {
 		bodyMap.put("username", "qwe4087731@126.com");
 		bodyMap.put("password", "466284796a");
 		bodyMap.put("appid", "on");
-		postData("https://kyfw.12306.cn/passport/web/login", "utf-8", null,
-				null);
+		postData("https://kyfw.12306.cn/passport/web/login", "utf-8", null, null);
 
-		String data = getData(
-				"http://kyfw.12306.cn/passport/captcha/captcha-image", "utf-8");
+		String data = getData("http://kyfw.12306.cn/passport/captcha/captcha-image", "utf-8");
 		System.out.println(data);
 	}
 }
