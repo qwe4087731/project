@@ -10,7 +10,7 @@ import com.smart.db.mybatis.bean.UserInfo;
 import com.smart.service.UserInfoService;
 
 @ContextConfiguration("classpath*:/spring/smart-context.xml")
-public class TestCase extends AbstractTransactionalTestNGSpringContextTests {
+public class ServiceCase extends AbstractTransactionalTestNGSpringContextTests {
 	@Autowired
 	private UserInfoService userInfoService;
 
@@ -20,4 +20,6 @@ public class TestCase extends AbstractTransactionalTestNGSpringContextTests {
 		Assert.assertEquals(userInfo.getUserName(), "lisi");
 
 	}
+	
+	
 }
