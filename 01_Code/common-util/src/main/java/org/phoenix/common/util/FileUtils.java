@@ -11,13 +11,10 @@ import java.util.Set;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
 import org.phoenix.common.constant.CharSetConsts;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FileUtils {
 	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
-	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
 	public static List<String> readLinesFromFile(String filepath, String encoder) throws Exception {
 		File file = new File(filepath);
@@ -73,8 +70,7 @@ public class FileUtils {
 					map.put(key, value);
 				}
 			} catch (Exception e) {
-				logger.error("file is illegal map", e);
-				throw e;
+				throw new IllegalArgumentException("file is illegal map", e);
 			}
 		}
 		return map;
@@ -119,8 +115,7 @@ public class FileUtils {
 					set.add(t);
 				}
 			} catch (Exception e) {
-				logger.error("file is illegal set", e);
-				throw e;
+				throw new IllegalArgumentException("file is illegal set", e);
 			}
 		}
 		return set;
