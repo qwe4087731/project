@@ -17,6 +17,7 @@ import org.mybatis.generator.api.dom.java.Parameter;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
+import org.mybatis.generator.api.dom.xml.Element;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
@@ -235,6 +236,28 @@ public class CustomerPlugin extends PluginAdapter {
 
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document, IntrospectedTable introspectedTable) {
+		List<Element> elements = document.getRootElement().getElements();
+		try {
+			java.lang.reflect.Field field = Class.forName("org.mybatis.generator.api.dom.xml.Attribute")
+					.getDeclaredField("value");
+			field.setAccessible(true);
+			for (Element element : elements) {
+				List<Attribute> attributes = ((XmlElement) element).getAttributes();
+				for (Attribute attribute : attributes) {
+					String name = attribute.getName();
+					if ("id".equals(name)) {
+						String value = attribute.getValue();
+						if (value.equals("selectByPrimaryKey")) {
+							field.set(attribute, "getByPrimaryKey");
+						} else if (value.equals("selectAll")) {
+							field.set(attribute, "listAll");
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		selectSql(document, introspectedTable);
 		updateSql(document, introspectedTable);
 		select(document, introspectedTable);
