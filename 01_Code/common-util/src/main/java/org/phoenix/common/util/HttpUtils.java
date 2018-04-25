@@ -36,12 +36,12 @@ public class HttpUtils {
 	public static final String USER_AGENT = "User-Agent";
 	public static final String REFERER = "Referer";
 
-	public static String bd_spiderUserAgent = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
-	public static String gg_spiderUserAgent = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
+	public static String BD_SPIDER_USER_AGENT = "Baiduspider+(+http://www.baidu.com/search/spider.htm)";
+	public static String GG_SPIDER_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 
-	public static String pc_chomeUserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
-	public static String pc_ieEdgeUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
-	public static String pc_ffUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
+	public static String PC_CHROME_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
+	public static String PC_IE_EDGE_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
+	public static String PC_FF_USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0";
 
 	// dns找不到不会报连接超时
 	// setConnectTimeout是建立与服务器的连接之前的超时,从连接管理器(连接池)请求连接时使用的是ConnectionRequestTimeout
@@ -50,7 +50,7 @@ public class HttpUtils {
 	private static CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).build();
 
 	public static String getData(String url, String encoder) throws Exception {
-		return getData(url, encoder, pc_ieEdgeUserAgent);
+		return getData(url, encoder, PC_CHROME_USER_AGENT);
 	}
 
 	public static String getData(String url, String encoder, String userAgent) throws Exception {
@@ -233,7 +233,7 @@ public class HttpUtils {
 			Map<String, String> bodyMap = new HashMap<String, String>();
 
 			Map<String, String> headMap = new HashMap<String, String>();
-			headMap.put(USER_AGENT, pc_ieEdgeUserAgent);
+			headMap.put(USER_AGENT, PC_CHROME_USER_AGENT);
 			String data = postAndGetData("http://www.tvmao.com/servlet/login",
 					"http://adm.tvmao.com/xadmin/drama/drama_query.jsp", CharSetConsts.UTF_8, headMap, bodyMap);
 			System.out.println(data);
