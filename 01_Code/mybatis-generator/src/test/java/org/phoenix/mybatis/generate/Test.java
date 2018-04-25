@@ -12,8 +12,9 @@ import org.phoenix.mybatis.criterion.SelectCriterion;
 import org.phoenix.mybatis.criterion.UpdateCriterion;
 import org.phoenix.mybatis.criterion.WhereClauses;
 import org.phoenix.mybatis.criterion.WhereClauses.WhereClause;
-import org.phonenix.db.mybatis.bean.UserInfo;
-import org.phonenix.db.mybatis.dao.UserInfoMapper;
+
+import com.smart.db.mybatis.bean.UserInfoDO;
+import com.smart.db.mybatis.dao.UserInfoDao;
 
 public class Test {
 	public static void main(String[] args) throws Exception {
@@ -21,28 +22,28 @@ public class Test {
 		InputStream is = Resources.getResourceAsStream(resource);
 		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(is);
 		SqlSession session = factory.openSession();
-		UserInfoMapper userInfoMapper = session.getMapper(UserInfoMapper.class);
+		UserInfoDao userInfoMapper = session.getMapper(UserInfoDao.class);
 
 		System.out
 				.println("begin to to test select ===================================");
 		SelectCriterion criterion = new SelectCriterion();
-		criterion.addSelectiveColumn(UserInfo.USER_ID).addSelectiveColumn(
-				UserInfo.USER_NAME);
+		criterion.addSelectiveColumn(UserInfoDO.USER_ID).addSelectiveColumn(
+				UserInfoDO.USER_NAME);
 		criterion.addOrWhereClauses(new WhereClauses()).addWhereClause(
-				new WhereClause(UserInfo.SEX, "=", "f"));
+				new WhereClause(UserInfoDO.SEX, "=", "f"));
 		criterion.setLength(1);
 		// criterion
 		// .addOrWhereClauses(new WhereClauses())
 		// .addWhereClause(
 		// new WhereClause(UserInfo.USER_NAME, "=", "zhangsan"))
 		// .addWhereClause(new WhereClause(UserInfo.USER_ID, "=", 2));
-		criterion.setOrderByClause(UserInfo.USER_ID + " desc");
-		List<UserInfo> userInfos = userInfoMapper.selectByCriterion(criterion);
+		criterion.setOrderByClause(UserInfoDO.USER_ID + " desc");
+		List<UserInfoDO> userInfos = userInfoMapper.listByCriterion(criterion);
 
 		// userInfoMapper.countByCriterion(criterion);
 		// List<UserInfo> userInfos = userInfoMapper.selectByExample(null);
 
-		for (UserInfo userInfo : userInfos) {
+		for (UserInfoDO userInfo : userInfos) {
 			System.out.println(userInfo);
 		}
 
@@ -50,7 +51,7 @@ public class Test {
 				.println("begin to to test count ===================================");
 		CountCriterion count = new CountCriterion();
 		count.addOrWhereClauses(new WhereClauses()).addWhereClause(
-				new WhereClause(UserInfo.USER_NAME, "=", "zhangsan"));
+				new WhereClause(UserInfoDO.USER_NAME, "=", "zhangsan"));
 		int num = userInfoMapper.countByCriterion(count);
 		System.out.println("count:" + num);
 
@@ -58,8 +59,8 @@ public class Test {
 				.println("begin to to test update ===================================");
 		UpdateCriterion update = new UpdateCriterion();
 		update.addOrWhereClauses(new WhereClauses()).addWhereClause(
-				new WhereClause(UserInfo.USER_NAME, "=", "zhangsan"));
-		UserInfo userInfo = new UserInfo();
+				new WhereClause(UserInfoDO.USER_NAME, "=", "zhangsan"));
+		UserInfoDO userInfo = new UserInfoDO();
 		userInfo.setUserName("hello");
 		num = userInfoMapper.updateByCriterion(userInfo, update);
 		System.out.println("update:" + num);

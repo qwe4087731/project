@@ -1,5 +1,10 @@
 package com.smart.service;
 
+import java.util.List;
+
+import org.phoenix.mybatis.criterion.SelectCriterion;
+import org.phoenix.mybatis.criterion.WhereClauses;
+import org.phoenix.mybatis.criterion.WhereClauses.WhereClause;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,4 +29,12 @@ public class UserInfoService {
 		return userInfo;
 	}
 
+	public List<UserInfoDO> listUserInfo() {
+		SelectCriterion select = new SelectCriterion();
+		WhereClauses whereClauses = new WhereClauses();
+		whereClauses.addWhereClause(new WhereClause(UserInfoDO.IS_DISABLED,
+				"=", true));
+		select.addOrWhereClauses(whereClauses);
+		return userInfoDao.listByCriterion(select);
+	}
 }
