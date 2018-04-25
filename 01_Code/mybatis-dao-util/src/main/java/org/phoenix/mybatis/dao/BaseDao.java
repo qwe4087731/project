@@ -13,18 +13,17 @@ public interface BaseDao<T> {
 
 	int insert(T t);
 
-	T selectByPrimaryKey(Integer id);
+	T getByPrimaryKey(Integer id);
 
-	List<T> selectAll();
+	List<T> listAll();
 
 	int updateByPrimaryKey(T t);
 
-	List<T> selectByCriterion(SelectCriterion criterion);
+	List<T> listByCriterion(SelectCriterion criterion);
 
 	int countByCriterion(CountCriterion criterion);
 
-	int updateByCriterion(@Param("record") T t,
-			@Param("criterion") UpdateCriterion criterion);
+	int updateByCriterion(@Param("record") T t, @Param("criterion") UpdateCriterion criterion);
 
 	int deleteByCriterion(DeleteCriterion criterion);
 }
