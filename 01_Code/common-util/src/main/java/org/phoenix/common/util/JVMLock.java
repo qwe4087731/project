@@ -50,8 +50,7 @@ public class JVMLock {
 		try {
 			// 打开文件通道，如果文件不存在则会创建，并且只读，防止channel.lock锁定了文件末尾
 			// 然后文件随后又增长，此时增长出来的部分没有锁定，更加通用的方法是lock方法锁定0-Long.MAX_VALUE，可以避免此问题
-			channel = FileChannel.open(Paths.get(lockFile),
-					StandardOpenOption.CREATE, StandardOpenOption.READ);
+			channel = FileChannel.open(Paths.get(lockFile), StandardOpenOption.CREATE, StandardOpenOption.READ);
 			lock = channel.lock(0L, Long.MAX_VALUE, isShared);
 		} catch (Exception ex) {
 			StreamUtils.closeStream(channel);
@@ -78,8 +77,7 @@ public class JVMLock {
 			// }
 
 			// 这里需要同时设置StandardOpenOption.CREATE和StandardOpenOption.WRITE才会创建文件，缺一不可
-			channel = FileChannel.open(Paths.get(lockFile),
-					StandardOpenOption.CREATE, StandardOpenOption.READ,
+			channel = FileChannel.open(Paths.get(lockFile), StandardOpenOption.CREATE, StandardOpenOption.READ,
 					StandardOpenOption.WRITE);
 			lock = channel.tryLock(0L, Long.MAX_VALUE, isShared);
 			return lock != null;
@@ -107,7 +105,7 @@ public class JVMLock {
 	// 文件锁定对象FileLock最初是有效的。通过调用FileLock.release
 	// 方法、关闭用于获取该锁定的通道channel.close()，或者终止 Java
 	// 虚拟机（以先到者为准）来释放锁定之前，该对象一直是有效的。可通过调用锁定的 isValid 方法来测试锁定的有效性。
-	public synchronized boolean isLocked() {
+	private synchronized boolean isLocked() {
 		return lock != null && lock.isValid();
 	}
 }
