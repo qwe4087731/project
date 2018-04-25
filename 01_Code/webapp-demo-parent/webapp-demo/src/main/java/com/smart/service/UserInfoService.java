@@ -2,6 +2,7 @@ package com.smart.service;
 
 import java.util.List;
 
+import org.phoenix.db.SqlConst;
 import org.phoenix.mybatis.criterion.SelectCriterion;
 import org.phoenix.mybatis.criterion.WhereClauses;
 import org.phoenix.mybatis.criterion.WhereClauses.WhereClause;
@@ -33,7 +34,7 @@ public class UserInfoService {
 		SelectCriterion select = new SelectCriterion();
 		WhereClauses whereClauses = new WhereClauses();
 		whereClauses.addWhereClause(new WhereClause(UserInfoDO.IS_DISABLED,
-				"=", true));
+				SqlConst.EQUAL, true));
 		select.addOrWhereClauses(whereClauses);
 		return userInfoDao.listByCriterion(select);
 	}
