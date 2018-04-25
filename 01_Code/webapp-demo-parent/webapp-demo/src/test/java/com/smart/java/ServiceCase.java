@@ -6,7 +6,7 @@ import org.springframework.test.context.testng.AbstractTransactionalTestNGSpring
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.smart.db.mybatis.bean.UserInfo;
+import com.smart.db.mybatis.bean.UserInfoDO;
 import com.smart.service.UserInfoService;
 
 @ContextConfiguration("classpath*:/spring/smart-context.xml")
@@ -16,10 +16,9 @@ public class ServiceCase extends AbstractTransactionalTestNGSpringContextTests {
 
 	@Test
 	public void testAddLoginLog() {
-		UserInfo userInfo = userInfoService.getUserInfo();
-		Assert.assertEquals(userInfo.getUserName(), "lisi");
+		UserInfoDO userInfo = userInfoService.getUserInfo();
+		Assert.assertEquals(userInfo.getUserName(), "zhangsan");
+		Assert.assertFalse(userInfo.getDisabled());
 
 	}
-	
-	
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.db.mybatis.dao.UserInfoDao">
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfoDO">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="sex" jdbcType="CHAR" property="sex" />
+    <result column="is_disabled" jdbcType="BIT" property="disabled" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfoDO">
+    insert into user_info (user_id, user_name, sex, 
+      is_disabled)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
+      #{disabled,jdbcType=BIT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfoDO">
+    update user_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=CHAR},
+      is_disabled = #{disabled,jdbcType=BIT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select user_id, user_name, sex, is_disabled
+    from user_info
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select user_id, user_name, sex, is_disabled
+    from user_info
+  </select>
+</mapper>

@@ -2,14 +2,14 @@ package com.smart.db.mybatis.bean;
 
 import java.io.Serializable;
 
-public class UserInfo implements Serializable {
+public class UserInfoDO implements Serializable {
     private Integer userId;
 
     private String userName;
 
-    private Integer age;
-
     private String sex;
+
+    private Boolean disabled;
 
     public static final String TABLENAME = "user_info";
 
@@ -17,9 +17,9 @@ public class UserInfo implements Serializable {
 
     public static final String USER_NAME = "user_name";
 
-    public static final String AGE = "age";
-
     public static final String SEX = "sex";
+
+    public static final String IS_DISABLED = "is_disabled";
 
     public Integer getUserId() {
         return userId;
@@ -37,20 +37,20 @@ public class UserInfo implements Serializable {
         this.userName = userName == null ? null : userName.trim();
     }
 
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
     public String getSex() {
         return sex;
     }
 
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
+    }
+
+    public Boolean getDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class UserInfo implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", userId=").append(userId);
         sb.append(", userName=").append(userName);
-        sb.append(", age=").append(age);
         sb.append(", sex=").append(sex);
+        sb.append(", disabled=").append(disabled);
         sb.append("]");
         return sb.toString();
     }
@@ -78,11 +78,11 @@ public class UserInfo implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        UserInfo other = (UserInfo) that;
+        UserInfoDO other = (UserInfoDO) that;
         return (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
-            && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
-            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()));
+            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+            && (this.getDisabled() == null ? other.getDisabled() == null : this.getDisabled().equals(other.getDisabled()));
     }
 
     @Override
@@ -91,8 +91,8 @@ public class UserInfo implements Serializable {
         int result = 1;
         result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
-        result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
+        result = prime * result + ((getDisabled() == null) ? 0 : getDisabled().hashCode());
         return result;
     }
 }
