@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smart.db.mybatis.dao.UserInfoDao">
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserInfoDO">
-    <id column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="sex" jdbcType="CHAR" property="sex" />
-    <result column="is_disabled" jdbcType="BIT" property="disabled" />
+<mapper namespace="com.smart.db.mybatis.dao.BookDao">
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.BookDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="author_id" jdbcType="INTEGER" property="authorId" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="intro_detail" jdbcType="VARCHAR" property="introDetail" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="author_name" jdbcType="VARBINARY" property="authorName" />
   </resultMap>
   <sql id="Criterion_Where_Clause">
     <where>
@@ -30,30 +34,36 @@
     </where>
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user_info
-    where user_id = #{userId,jdbcType=INTEGER}
+    delete from book
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserInfoDO">
-    insert into user_info (user_id, user_name, sex, 
-      is_disabled)
-    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
-      #{disabled,jdbcType=BIT})
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.BookDO">
+    insert into book (id, name, author_id, 
+      intro, intro_detail, gmt_create, 
+      gmt_modified, author_name)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{authorId,jdbcType=INTEGER}, 
+      #{intro,jdbcType=VARCHAR}, #{introDetail,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{authorName,jdbcType=VARBINARY})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserInfoDO">
-    update user_info
-    set user_name = #{userName,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=CHAR},
-      is_disabled = #{disabled,jdbcType=BIT}
-    where user_id = #{userId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.BookDO">
+    update book
+    set name = #{name,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=INTEGER},
+      intro = #{intro,jdbcType=VARCHAR},
+      intro_detail = #{introDetail,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      author_name = #{authorName,jdbcType=VARBINARY}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select user_id, user_name, sex, is_disabled
-    from user_info
-    where user_id = #{userId,jdbcType=INTEGER}
+    select id, name, author_id, intro, intro_detail, gmt_create, gmt_modified, author_name
+    from book
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="listAll" resultMap="BaseResultMap">
-    select user_id, user_name, sex, is_disabled
-    from user_info
+    select id, name, author_id, intro, intro_detail, gmt_create, gmt_modified, author_name
+    from book
   </select>
   <select id="listByCriterion" parameterType="org.phoenix.mybatis.criterion.SelectCriterion" resultMap="BaseResultMap">
     select
@@ -67,10 +77,10 @@
         </foreach>
       </when>
       <otherwise>
-        user_id, user_name, sex, is_disabled
+        id, name, author_id, intro, intro_detail, gmt_create, gmt_modified, author_name
       </otherwise>
     </choose>
-    from user_info
+    from book
     <if test="_parameter != null ">
       <include refid="Criterion_Where_Clause" />
     </if>
@@ -82,25 +92,37 @@
     </if>
   </select>
   <select id="countByCriterion" parameterType="org.phoenix.mybatis.criterion.CountCriterion" resultType="java.lang.Integer">
-    select count(*) from user_info
+    select count(*) from book
     <if test="_parameter != null ">
       <include refid="Criterion_Where_Clause" />
     </if>
   </select>
   <update id="updateByCriterion" parameterType="map">
-    update user_info
+    update book
     <set>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userName != null">
-        user_name = #{record.userName,jdbcType=VARCHAR},
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
       </if>
-      <if test="record.sex != null">
-        sex = #{record.sex,jdbcType=CHAR},
+      <if test="record.authorId != null">
+        author_id = #{record.authorId,jdbcType=INTEGER},
       </if>
-      <if test="record.disabled != null">
-        is_disabled = #{record.disabled,jdbcType=BIT},
+      <if test="record.intro != null">
+        intro = #{record.intro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introDetail != null">
+        intro_detail = #{record.introDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.authorName != null">
+        author_name = #{record.authorName,jdbcType=VARBINARY},
       </if>
     </set>
     <if test="criterion != null">
@@ -115,7 +137,7 @@
     </if>
   </update>
   <delete id="deleteByCriterion" parameterType="org.phoenix.mybatis.criterion.DeleteCriterion">
-    delete from user_info
+    delete from book
     <if test="_parameter != null">
       <choose>
         <when test="orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0">
