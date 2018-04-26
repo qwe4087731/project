@@ -10,56 +10,44 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.log4j.Logger;
-import org.phoenix.common.constant.CharSetConst;
+import org.phoenix.common.constant.CharSetConsts;
 
 public class FileUtils {
-	public static final String FILE_SEPARATOR = System
-			.getProperty("file.separator");
-	public static final String LINE_SEPARATOR = System
-			.getProperty("line.separator");
-	private static Logger logger = Logger.getLogger(FileUtils.class);
+	public static final String FILE_SEPARATOR = System.getProperty("file.separator");
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator");
 
-	public static List<String> readLinesFromFile(String filepath, String encoder)
-			throws Exception {
+	public static List<String> readLinesFromFile(String filepath, String encoder) throws Exception {
 		File file = new File(filepath);
 		if (!file.exists()) {
 			return null;
 		}
-		List<String> lines = org.apache.commons.io.FileUtils.readLines(
-				new File(filepath), encoder);
+		List<String> lines = org.apache.commons.io.FileUtils.readLines(new File(filepath), encoder);
 		return lines;
 	}
 
-	public static String readDataFromFile(String filepath, String encoder)
-			throws Exception {
+	public static String readDataFromFile(String filepath, String encoder) throws Exception {
 		File file = new File(filepath);
 		if (!file.exists()) {
 			return null;
 		}
-		return org.apache.commons.io.FileUtils.readFileToString(new File(
-				filepath), encoder);
+		return org.apache.commons.io.FileUtils.readFileToString(new File(filepath), encoder);
 	}
 
-	public static void writeDataToFile(String filepath, String data,
-			boolean append) throws Exception {
-		writeDataToFile(filepath, data, CharSetConst.UTF_8, append);
+	public static void writeDataToFile(String filepath, String data, boolean append) throws Exception {
+		writeDataToFile(filepath, data, CharSetConsts.UTF_8, append);
 	}
 
-	public static void writeDataToFile(String filepath, String data,
-			String charset, boolean append) throws Exception {
-		org.apache.commons.io.FileUtils.writeStringToFile(new File(filepath),
-				data, charset, append);
+	public static void writeDataToFile(String filepath, String data, String charset, boolean append) throws Exception {
+		org.apache.commons.io.FileUtils.writeStringToFile(new File(filepath), data, charset, append);
 	}
 
-	public static <K, V> Map<K, V> readMapFromFile(String filepath,
-			String encoder, Class<K> K, Class<V> V) throws Exception {
+	public static <K, V> Map<K, V> readMapFromFile(String filepath, String encoder, Class<K> K, Class<V> V)
+			throws Exception {
 		return readMapFromFile(filepath, encoder, false, K, V);
 	}
 
-	public static <K, V> Map<K, V> readMapFromFile(String filepath,
-			String encoder, boolean order, Class<K> K, Class<V> V)
-			throws Exception {
+	public static <K, V> Map<K, V> readMapFromFile(String filepath, String encoder, boolean order, Class<K> K,
+			Class<V> V) throws Exception {
 		Map<K, V> map = order ? new LinkedHashMap<K, V>() : new HashMap<K, V>();
 		List<String> lines = readLinesFromFile(filepath, encoder);
 		if (lines != null) {
@@ -73,19 +61,16 @@ public class FileUtils {
 					} else {
 						String tmp = "";
 						for (int i = 1; i < values.length; i++) {
-							tmp += values[i]
-									+ (i == values.length - 1 ? "" : "=");
+							tmp += values[i] + (i == values.length - 1 ? "" : "=");
 						}
 						v = tmp;
 					}
 					K key = (K) StrictConvertUtils.getInstance().convert(k, K);
-					V value = (V) StrictConvertUtils.getInstance()
-							.convert(v, V);
+					V value = (V) StrictConvertUtils.getInstance().convert(v, V);
 					map.put(key, value);
 				}
 			} catch (Exception e) {
-				logger.error("file is illegal map", e);
-				throw e;
+				throw new IllegalArgumentException("file is illegal map", e);
 			}
 		}
 		return map;
@@ -103,13 +88,11 @@ public class FileUtils {
 		}
 	}
 
-	public static void writeMapToFile(String filepath, Map<?, ?> map,
-			String encoder, boolean append) throws Exception {
+	public static void writeMapToFile(String filepath, Map<?, ?> map, String encoder, boolean append) throws Exception {
 		if (map != null) {
 			StringBuilder buf = new StringBuilder();
 			for (Map.Entry<?, ?> entry : map.entrySet()) {
-				buf.append(entry.getKey()).append("=").append(entry.getValue())
-						.append(LINE_SEPARATOR);
+				buf.append(entry.getKey()).append("=").append(entry.getValue()).append(LINE_SEPARATOR);
 			}
 			if (buf.length() > 0) {
 				writeDataToFile(filepath, buf.toString(), encoder, append);
@@ -117,13 +100,12 @@ public class FileUtils {
 		}
 	}
 
-	public static <T> Set<T> readSetFromFile(String filepath, String encoder,
-			Class<T> T) throws Exception {
+	public static <T> Set<T> readSetFromFile(String filepath, String encoder, Class<T> T) throws Exception {
 		return readSetFromFile(filepath, encoder, false, T);
 	}
 
-	public static <T> Set<T> readSetFromFile(String filepath, String encoder,
-			boolean order, Class<T> T) throws Exception {
+	public static <T> Set<T> readSetFromFile(String filepath, String encoder, boolean order, Class<T> T)
+			throws Exception {
 		Set<T> set = order ? new LinkedHashSet<T>() : new HashSet<T>();
 		List<String> lines = readLinesFromFile(filepath, encoder);
 		if (lines != null) {
@@ -133,15 +115,14 @@ public class FileUtils {
 					set.add(t);
 				}
 			} catch (Exception e) {
-				logger.error("file is illegal set", e);
-				throw e;
+				throw new IllegalArgumentException("file is illegal set", e);
 			}
 		}
 		return set;
 	}
 
-	public static void writeSetToFile(String filepath, Set<String> set,
-			String encoder, boolean append) throws Exception {
+	public static void writeSetToFile(String filepath, Set<String> set, String encoder, boolean append)
+			throws Exception {
 		if (set != null) {
 			StringBuilder buf = new StringBuilder();
 			for (String line : set) {
@@ -177,10 +158,8 @@ public class FileUtils {
 	// }
 	// }
 
-	public static void copyFile(String srcFile, String destFile)
-			throws Exception {
-		org.apache.commons.io.FileUtils.copyFile(new File(srcFile), new File(
-				destFile));
+	public static void copyFile(String srcFile, String destFile) throws Exception {
+		org.apache.commons.io.FileUtils.copyFile(new File(srcFile), new File(destFile));
 	}
 
 	// 给定路径如果父目录不存在就创建
@@ -215,10 +194,8 @@ public class FileUtils {
 		map.put("1", "123");
 		map.put("2", "123=45");
 		String filepath = "C:\\Users\\qz\\Desktop\\hello\\1.txt";
-		writeMapToFile("C:\\Users\\qz\\Desktop\\hello\\1.txt", map, "utf-8",
-				false);
-		Map<Integer, String> newMap = readMapFromFile(filepath, "utf-8",
-				Integer.class, String.class);
+		writeMapToFile("C:\\Users\\qz\\Desktop\\hello\\1.txt", map, "utf-8", false);
+		Map<Integer, String> newMap = readMapFromFile(filepath, "utf-8", Integer.class, String.class);
 		for (Integer key : newMap.keySet()) {
 			System.out.println(key + "=" + newMap.get(key));
 		}

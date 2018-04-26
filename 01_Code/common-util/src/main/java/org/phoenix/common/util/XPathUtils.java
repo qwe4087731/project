@@ -16,7 +16,7 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.CompactXmlSerializer;
 import org.htmlcleaner.HtmlCleaner;
 import org.htmlcleaner.TagNode;
-import org.phoenix.common.constant.CharSetConst;
+import org.phoenix.common.constant.CharSetConsts;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,7 +53,7 @@ public class XPathUtils {
 		// 此版本会最大性兼容不规范的html代码
 		// utf-8表示生成的xml文件<?xml version="1.0" encoding="utf-8"?>
 		String xmlData = new CompactXmlSerializer(properties).getAsString(node,
-				CharSetConst.UTF_8);
+				CharSetConsts.UTF_8);
 
 		return xmlData;
 	}
@@ -179,7 +179,7 @@ public class XPathUtils {
 		String data = null;
 		long time1 = System.currentTimeMillis();
 		try {
-			data = HttpUtils.getData(url, CharSetConst.UTF_8);
+			data = HttpUtils.getData(url, CharSetConsts.UTF_8);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

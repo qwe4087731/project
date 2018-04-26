@@ -2,7 +2,8 @@ package org.phoenix.encrypt;
 
 import java.security.MessageDigest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 单向加密
@@ -11,8 +12,7 @@ import org.apache.log4j.Logger;
  * 
  */
 public class MessageDigestUtils {
-	private static final Logger logger = Logger
-			.getLogger(MessageDigestUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(MessageDigestUtils.class);
 
 	public final static MessageDigestUtils instance = new MessageDigestUtils();
 	public MessageDigest md5Digest = null;
