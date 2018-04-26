@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/4/26 21:32:27                           */
+/* Created on:     2018/4/26 22:45:25                           */
 /*==============================================================*/
 
 
@@ -14,7 +14,7 @@ drop index uk_oauth_id_oauth_type on oauth;
 
 drop table if exists oauth;
 
-drop index idx_book_id on section;
+drop index uk_book_id_ordered on section;
 
 drop table if exists section;
 
@@ -90,10 +90,10 @@ create table section
 (
    id                   int unsigned not null auto_increment,
    book_id              int unsigned not null,
-   index                int unsigned not null,
+   ordered              int unsigned not null,
    section_num          int unsigned not null,
    section_name         varchar(64) not null,
-   part_num             int not null default 0,
+   part_num             int unsigned not null default 0,
    part_name            varchar(64) not null default "",
    gmt_create           datetime not null,
    gmt_modified         datetime not null,
@@ -101,11 +101,12 @@ create table section
 );
 
 /*==============================================================*/
-/* Index: idx_book_id                                           */
+/* Index: uk_book_id_ordered                                    */
 /*==============================================================*/
-create index idx_book_id on section
+create unique index uk_book_id_ordered on section
 (
-   book_id
+   book_id,
+   ordered
 );
 
 /*==============================================================*/
