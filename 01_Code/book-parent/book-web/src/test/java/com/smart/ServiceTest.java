@@ -12,14 +12,14 @@ import com.smart.db.mybatis.bean.UserDO;
 import com.smart.service.UserService;
 
 @ContextConfiguration("classpath*:/spring/smart-context.xml")
-public class ServiceCaseTest extends AbstractTransactionalTestNGSpringContextTests {
+public class ServiceTest extends AbstractTransactionalTestNGSpringContextTests {
 	@Autowired
 	private UserService userInfoService;
 
 	@Test
 	public void testAddLoginLog() {
 		UserDO userInfo = userInfoService.getUserInfo();
-		Assert.assertEquals(userInfo.getName(), "lisi");
+		Assert.assertEquals(userInfo.getName(), "zhangsan");
 		// Assert.assertTrue(userInfo.get());
 
 	}

@@ -26,7 +26,7 @@ public class UserService {
 	}
 
 	public UserDO getUserInfo() {
-		UserDO user = userDao.getByPrimaryKey(2);
+		UserDO user = userDao.getByPrimaryKey(1);
 		return user;
 	}
 
