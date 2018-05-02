@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.db.mybatis.dao.OauthDao">
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.OauthDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="oauth_type" jdbcType="TINYINT" property="oauthType" />
+    <result column="oauth_id" jdbcType="VARCHAR" property="oauthId" />
+    <result column="oauth_token" jdbcType="VARCHAR" property="oauthToken" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Criterion_Where_Clause">
+    <where>
+      <foreach collection="orWhereClausesList" item="whereclauses" separator="or">
+        <trim prefix="(" prefixOverrides="and" suffix=")">
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause">
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_Criterion_Where_Clause">
+    <where>
+      <foreach collection="criterion.orWhereClausesList" item="whereclauses" separator="or">
+        <trim prefix="(" prefixOverrides="and" suffix=")">
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause">
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from oauth
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.OauthDO">
+    insert into oauth (id, user_id, oauth_type, 
+      oauth_id, oauth_token, gmt_create, 
+      gmt_modified)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{oauthType,jdbcType=TINYINT}, 
+      #{oauthId,jdbcType=VARCHAR}, #{oauthToken,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.OauthDO">
+    update oauth
+    set user_id = #{userId,jdbcType=INTEGER},
+      oauth_type = #{oauthType,jdbcType=TINYINT},
+      oauth_id = #{oauthId,jdbcType=VARCHAR},
+      oauth_token = #{oauthToken,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, user_id, oauth_type, oauth_id, oauth_token, gmt_create, gmt_modified
+    from oauth
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select id, user_id, oauth_type, oauth_id, oauth_token, gmt_create, gmt_modified
+    from oauth
+  </select>
+  <select id="listByCriterion" parameterType="org.phoenix.mybatis.criterion.SelectCriterion" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <choose>
+      <when test="_parameter != null and selectiveColumnlist.size() != 0">
+        <foreach collection="selectiveColumnlist" item="column" separator=",">
+          ${column}
+        </foreach>
+      </when>
+      <otherwise>
+        id, user_id, oauth_type, oauth_id, oauth_token, gmt_create, gmt_modified
+      </otherwise>
+    </choose>
+    from oauth
+    <if test="_parameter != null ">
+      <include refid="Criterion_Where_Clause" />
+    </if>
+    <if test="orderByClause != null and orderByClause != ''">
+      order by ${orderByClause}
+    </if>
+    <if test="_parameter != null and length != 0">
+      limit ${begin}, ${length}
+    </if>
+  </select>
+  <select id="countByCriterion" parameterType="org.phoenix.mybatis.criterion.CountCriterion" resultType="java.lang.Integer">
+    select count(*) from oauth
+    <if test="_parameter != null ">
+      <include refid="Criterion_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriterion" parameterType="map">
+    update oauth
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.oauthType != null">
+        oauth_type = #{record.oauthType,jdbcType=TINYINT},
+      </if>
+      <if test="record.oauthId != null">
+        oauth_id = #{record.oauthId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oauthToken != null">
+        oauth_token = #{record.oauthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="criterion != null">
+      <choose>
+        <when test="criterion.orWhereClausesList.size() == 0 || criterion.orWhereClausesList.get(0).andWhereClauselist.size() == 0">
+          error
+        </when>
+        <otherwise>
+          <include refid="Update_Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </update>
+  <delete id="deleteByCriterion" parameterType="org.phoenix.mybatis.criterion.DeleteCriterion">
+    delete from oauth
+    <if test="_parameter != null">
+      <choose>
+        <when test="orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0">
+          error
+        </when>
+        <otherwise>
+          <include refid="Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </delete>
+</mapper>
