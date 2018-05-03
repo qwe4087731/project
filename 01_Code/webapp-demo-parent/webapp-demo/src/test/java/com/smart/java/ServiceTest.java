@@ -28,7 +28,7 @@ public class ServiceTest extends
 	@Test
 	public void testAddLoginLog1() {
 		List<UserDO> userInfoList = userInfoService.listUserInfo();
-		Assert.assertEquals(userInfoList.size(), 2);
+		Assert.assertEquals(userInfoList.size(), 1);
 	}
 
 }

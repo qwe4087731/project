@@ -80,6 +80,26 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.8</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.1</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -107,29 +127,33 @@
 	</dependencies>
 
 	<build>
+		<finalName>smart</finalName>
 		<plugins>
+			<!-- <plugin> <groupId>org.apache.tomcat.maven</groupId> <artifactId>tomcat7-maven-plugin</artifactId> 
+				<version>2.2</version> <configuration> <url>http://localhost:8080/manager/text</url> 
+				表示管理页面，maven插件需要根据这个页面部署应用 <server>tomcat7</server> 引用setting.xml中配置的server，setting会配置一个server 
+				<path>/smart</path> <username>admin</username> 连接server的用户名以及密码 <password>admin</password> 
+				</configuration> </plugin> -->
+
 			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
+				<groupId>org.codehaus.cargo</groupId>
+				<artifactId>cargo-maven2-plugin</artifactId>
+				<version>1.6.5</version>
 				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<!-- 表示管理页面，maven插件需要根据这个页面部署应用 -->
-					<server>tomcat7</server>
-					<!-- 引用setting.xml中配置的server，setting会配置一个server -->
-					<path>/smart</path>
-					<username>admin</username>
-					<!-- 连接server的用户名以及密码 -->
-					<password>admin</password>
+					<container>
+						<containerId>tomcat7x</containerId>
+						<home>E:/Tools/apache-tomcat-7.0.47</home>
+					</container>
+					<configuration>
+						<type>standalone</type>
+						<!-- D:/workspace_android/project/01_Code/webapp-demo-parent/webapp-demo/target/tomcat -->
+						<home>${project.build.directory}/tomcat</home>
+						<properties>
+							<cargo.server.port>8080</cargo.server.port>
+						</properties>
+					</configuration>
 				</configuration>
 			</plugin>
-
-			<!-- <plugin> <groupId>org.codehaus.cargo</groupId> <artifactId>cargo-maven2-plugin</artifactId> 
-				<version>1.6.5</version> <configuration> <container> <containerId>tomcat7x</containerId> 
-				<home>E:/Tools/apache-tomcat-7.0.47</home> </container> <configuration> <type>standalone</type> 
-				D:/workspace_android/project/01_Code/webapp-demo-parent/webapp-demo/target/tomcat 
-				<home>${project.build.directory}/tomcat</home> <properties> <cargo.server.port>8085</cargo.server.port> 
-				</properties> </configuration> </configuration> </plugin> -->
 		</plugins>
 	</build>
 

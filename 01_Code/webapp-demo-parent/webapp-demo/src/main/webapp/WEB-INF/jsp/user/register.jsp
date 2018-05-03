@@ -10,13 +10,13 @@
     <table>
 	    <tr>
 	       <td>用户名123：</td>
-	       <td><input type="text" name="userName"  /></td>
+	       <td><input type="text" name="name"  /></td>
 	    </tr>
 	    <tr>
 	     <td>密码：</td>
-	       <td><input type="password" name="password" /></td>
+	       <td><input type="password" name="imgId" /></td>
 	    </tr>
-	    <tr>
+	    <!-- <tr>
 	     <td>姓名：</td>
 	       <td><input type="text" name="realName" /></td>
 	    </tr>
@@ -27,7 +27,7 @@
 	    	    	    	    <tr>
 	     <td>工资：</td>
 	       <td><input type="text" name="realName" /></td>
-	    </tr>
+	    </tr> -->
 	    <tr>
 	     <td colspan="2"><input type="submit" name="提交"/></td>
 	    </tr>	    
