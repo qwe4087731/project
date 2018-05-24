@@ -1,13 +1,26 @@
 <template>
     <div class="goods-list">
-        <div class="goods-item" v-for="item in list" :key="item.id">
-            <img src="item.src"/>
+        <!--<router-link class="goods-item" v-for="item in list" :key="item.id" :to="'/home/goodsinfo/' + item.id"-->
+        <!--tag="div">-->
+        <!--<img :src="item.img_url"/>-->
+        <!--<h1 class="title">{{item.title}}</h1>-->
+        <!--<div class="info">-->
+        <!--<p class="price"><span class="now">{{item.sell_price}}</span><span-->
+        <!--class="old">{{item.market_price}}</span></p>-->
+        <!--<p class="sell"><span class="now">热卖中</span><span class="old">剩{{item.stock_quantity}}件</span></p>-->
+        <!--</div>-->
+        <!--</router-link>-->
+
+        <div class="goods-item" v-for="item in list" :key="item.id" @click="getDetail(item.id)">
+            <img :src="item.img_url"/>
             <h1 class="title">{{item.title}}</h1>
             <div class="info">
-                <p class="price"><span class="now">{{item.price}}</span><span class="old"></span></p>
-                <p class="sell"><span class="now">热卖中</span><span class="old">剩{{}}件</span></p>
+                <p class="price"><span class="now">{{item.sell_price}}</span><span
+                        class="old">{{item.market_price}}</span></p>
+                <p class="sell"><span class="now">热卖中</span><span class="old">剩{{item.stock_quantity}}件</span></p>
             </div>
         </div>
+        <mt-button type="danger" size="large" @click="getGoodsList">加载更多</mt-button>
     </div>
 </template>
 
@@ -18,11 +31,36 @@
             return {
                 list: []
             }
-
+        },
+        created() {
+            this.getGoodsList();
         },
         methods: {
             getGoodsList() {
-                this.list = this.list.concat([]);
+                this.list = this.list.concat([{
+                    id: 1,
+                    add_time: '2015-04-09T03:02:01.0002Z',
+                    title: '华为(HUAWEI)荣耀PLUS 16G',
+                    zhaiyao: '荣耀6PLUS，该机型分为2款型号',
+                    click: 0,
+                    img_url: 'http://img4.imgtn.bdimg.com/it/u=4063527091,1765948189&fm=27&gp=0.jpg',
+                    sell_price: 2195,
+                    market_price: 2499,
+                    stock_quantity: 60
+                }, {
+                    id: 2,
+                    add_time: '2015-04-09T03:02:01.0002Z',
+                    title: '小米6S',
+                    zhaiyao: '小米6S最新上市',
+                    click: 0,
+                    img_url: 'https://res.vmallres.com/pimages//sale/2018-04/2018042811131740.png',
+                    sell_price: 1800,
+                    market_price: 2000,
+                    stock_quantity: 30
+                }]);
+            },
+            getDetail(id) {
+                this.$router.push('/home/goodsinfo/' + id);
             }
         }
     }
