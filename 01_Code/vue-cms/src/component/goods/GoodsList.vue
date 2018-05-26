@@ -60,7 +60,20 @@
                 }]);
             },
             getDetail(id) {
-                this.$router.push('/home/goodsinfo/' + id);
+                // this.$router.push('/home/goodsinfo/' + id);
+                // this.$router.push({
+                //     path: '/home/goodsinfo/' + id
+                // });
+                //这里的name必须在router.js里面配置一个名为goodsinfo的router对象，params因为名字为id，value也为id，所以可以简写为id
+                this.$router.push({
+                    name: 'goodsinfo',
+                    params: {id}
+                });
+                //使用path的话，params会被忽略，只能使用query传递参数或者直接跟在path后面
+                this.$router.push({
+                    path: '/home/goodsinfo/',
+                    query: {id}
+                });
             }
         }
     }

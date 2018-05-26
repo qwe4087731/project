@@ -53,6 +53,7 @@ var router = new VueRouter({
             component: GoodsList
         },
         {
+            name: 'googsinfo',
             path: '/home/goodsinfo/:id',
             component: GoodsInfo
         }
