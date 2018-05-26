@@ -118,5 +118,9 @@
             font-size: 13px;
             line-height: 30px;
         }
+
+        /deep/ figure {
+            margin: 0;
+        }
     }
 </style>

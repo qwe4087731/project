@@ -68,7 +68,18 @@
 </script>
 
 <!--这里必须把scoped去掉，否则的话img100%不生效-->
-<style lang="scss">
+<!--因为加上scoped会为当前模板中的所有的html标签都加上一个data-v-xxx属性，-->
+<!--对应的css样式就会如下：-->
+<!--.newsinfo-container[data-v-4e50e0f5]-->
+<!--.newsinfo-container .title[data-v-4e50e0f5]-->
+<!--.newsinfo-container .subtitle[data-v-4e50e0f5]-->
+<!--.content img[data-v-4e50e0f5]-->
+<!--而这里的img不是不是当前模板中的html标签，而是v-html中的动态添加的标签，-->
+<!--所以img没有没有data-v-xxx属性。-->
+<!--.content img[data-v-4e50e0f5]{width:100%}就不会生效-->
+<!--https://segmentfault.com/a/1190000012184604?utm_source=tuicool&utm_medium=referral-->
+<!--https://vue-loader-v14.vuejs.org/zh-cn/features/scoped-css.html 解决方案-->
+<style lang="scss" scoped>
     .newsinfo-container {
         padding: 0 4px;
         .title {
@@ -84,10 +95,9 @@
             justify-content: space-between;
         }
 
-        .content {
-            img {
-                width: 100%;
-            }
+        /*scss使用 /deep/ ，如果是css，使用.content > > > img*/
+        .content /deep/ img {
+            width: 100%;
         }
     }
 </style>

@@ -1,3 +1,4 @@
+<script src="../../../webpack.config.js"></script>
 <template>
     <div class="goods-list">
         <!--<router-link class="goods-item" v-for="item in list" :key="item.id" :to="'/home/goodsinfo/' + item.id"-->
@@ -70,10 +71,12 @@
                     params: {id}
                 });
                 //使用path的话，params会被忽略，只能使用query传递参数或者直接跟在path后面
-                this.$router.push({
-                    path: '/home/goodsinfo/',
-                    query: {id}
-                });
+                // this.$router.push({
+                //     path: '/home/goodsinfo/',
+                //     query: {id}
+                // });
+
+                // this.$router.back();
             }
         }
     }

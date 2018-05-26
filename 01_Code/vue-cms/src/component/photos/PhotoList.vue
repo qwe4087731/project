@@ -54,6 +54,7 @@
                 //         result.body.message.unshift({title: '全部', id: 0})
                 //     }
                 // })
+             
                 this.category = this.category.concat([
                     {
                         title: '家居生活',
