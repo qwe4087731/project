@@ -22,13 +22,13 @@
         height: 200px;
         .mint-swipe-item {
             &:nth-child(1) {
-                background: red;
+                /*background: red;*/
             }
             &:nth-child(2) {
-                background: blue;
+                /*background: blue;*/
             }
             &:nth-child(3) {
-                background: green;
+                /*background: green;*/
             }
 
             img {

@@ -131,6 +131,13 @@
 
             addToShopCar() {
                 this.ballFlag = !this.ballFlag;
+                var goodsinfo = {
+                    id: this.id,
+                    count: this.selectCount,
+                    price: this.goodsinfo.sell_price,
+                    selected: true
+                }
+                this.$store.commit('addToCar', goodsinfo);
             },
 
             beforeEnter(el) {
@@ -148,7 +155,7 @@
                 //ES6的模板字符串写法``
                 el.style.transform = `translate(${xDist}px,${yDist}px)`;
                 // el.style.transform = "translate(81px,202px)";
-                el.style.transition = "all 1s ease";
+                el.style.transition = "all 0.5s ease";
                 done();
             },
 
