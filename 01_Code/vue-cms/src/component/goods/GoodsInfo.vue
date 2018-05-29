@@ -1,7 +1,7 @@
 <template>
     <div class="goodinfo-container">
         <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
-            <div class="ball" v-show="ballFlag"></div>
+            <div class="ball" v-show="ballFlag" ref="ball"></div>
         </transition>
         <div class="mui-card">
             <div class="mui-card-content">
@@ -20,7 +20,7 @@
                         <del>¥{{goodsinfo.market_price}}</del>&nbsp;&nbsp;销售价：<span class="now_price">¥{{goodsinfo.sell_price}}</span>
                     </p>
                     <p>购买数量：
-                        <numbox :maxnum="goodsinfo.stock_quantity"></numbox>
+                        <numbox :maxnum="goodsinfo.stock_quantity" @getcount="getSelectedCount"></numbox>
                     </p>
                     <p>
                         <mt-button type="primary" size="small">立即购买</mt-button>
@@ -59,7 +59,8 @@
                 id: this.$route.params.id,
                 lunboList: [],
                 goodsinfo: {},
-                ballFlag: false
+                ballFlag: false,
+                selectCount: 1
             }
         },
         created() {
@@ -97,6 +98,8 @@
                 //         this.goodsinfo = result.body.message;
                 //     }
                 // })
+                //注意如果是请求网络有可能stock_quantity还没有得到，此时就已经开始渲染numbox组件，而此时stock_quantity为undefined，所以导致numberbox控制最大数量不生效
+                //所以我们可以在numbox组件使用watch来监听stock_quantity字段变化
                 this.goodsinfo = {
                     add_time: '2015-07-08',
                     goods_no: "SD298883899",
@@ -137,8 +140,14 @@
 
             enter(el, done) {
                 console.log("enter");
+                const ballPosition = this.$refs.ball.getBoundingClientRect();
+                const badgePostion = document.getElementById("badge").getBoundingClientRect();
+                const xDist = badgePostion.left - ballPosition.left;
+                const yDist = badgePostion.top - ballPosition.top;
                 el.offsetWidth;
-                el.style.transform = "translate(93px,205px)";
+                //ES6的模板字符串写法``
+                el.style.transform = `translate(${xDist}px,${yDist}px)`;
+                // el.style.transform = "translate(81px,202px)";
                 el.style.transition = "all 1s ease";
                 done();
             },
@@ -146,6 +155,11 @@
             afterEnter(el) {
                 console.log("after enter");
                 this.ballFlag = !this.ballFlag;
+            },
+
+            getSelectedCount(count) {
+                this.selectCount = count;
+                console.log(this.selectCount);
             }
         }
 
