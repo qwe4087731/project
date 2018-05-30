@@ -55,6 +55,15 @@ const store = new Vuex.Store({
                 state.car.unshift(goodsinfo);
             }
             localStorage.setItem("car", JSON.stringify(state.car));
+        },
+        updateGoodsInfo(state, goodsinfo) {
+            state.car.some(item => {
+                if (item.id == goodsinfo.id) {
+                    item.count = parseInt(goodsinfo.count);
+                    return true;
+                }
+            })
+            localStorage.setItem("car", JSON.stringify(state.car));
         }
     },
     getters: {
@@ -64,6 +73,13 @@ const store = new Vuex.Store({
                 c += item.count;
             })
             return c;
+        },
+        getGoodsCoount(state) {
+            var o = {};
+            state.car.forEach(item => {
+                o[item.id] = item.count;
+            })
+            return o;
         }
     }
 })
