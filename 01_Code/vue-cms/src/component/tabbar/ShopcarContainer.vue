@@ -2,19 +2,35 @@
     <div class="shopcar-container">
         <div class="goods-list">
 
-            <div class="mui-card" v-for="item in shopcar" :key="item.id">
+            <div class="mui-card" v-for="(item, i) in shopcar" :key="item.id">
                 <div class="mui-card-content">
                     <div class="mui-card-content-inner">
-                        <mt-switch></mt-switch>
+                        <!--这里使用了v-modal双向绑定，但是$store中的数据不能这样赋值，使用v-modal是因为是mt-switch标签的文档规定如此，
+                        此时我们修改的是$store.getters中的getGoodsSelecte返回的对象，所以我们需要添加事件监听来绑定，并且把修改过的值传递过去-->
+                        <mt-switch v-model="$store.getters.getGoodsSelected[item.id]"
+                                   @change="selectedChanged(item.id, $store.getters.getGoodsSelected[item.id])"></mt-switch>
                         <img :src="item.img_url"/>
                         <div clas="info">
                             <h1>{{item.title}}</h1>
                             <p>
                                 <span class="price">¥{{item.sell_price}}</span>
-                                <numbox :initcount="$store.getters.getGoodsCoount[item.id]" :goodsid="item.id"></numbox>
-                                <a href="">删除</a>
+                                <numbox :initcount="$store.getters.getGoodsCount[item.id]" :goodsid="item.id"></numbox>
+                                <a href="#" @click.prevent="remove(item.id, i)">删除</a>
                             </p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mui-card">
+                <div class="mui-card-content">
+                    <div class="mui-card-content-inner jiesuan">
+                        <div class="left">
+                            <p>总计(不包含运费)</p>
+                            <p>已勾选商品<span class="red">{{$store.getters.getGoodsCountAndAmount.count}}</span>件，总价<span
+                                    class="red">¥{{$store.getters.getGoodsCountAndAmount.amount}}</span></p>
+                        </div>
+                        <mt-button type="danger">去结算</mt-button>
                     </div>
                 </div>
             </div>
@@ -67,6 +83,19 @@
                     count: 20
                 }]
                 this.shopcar = array;
+            },
+
+            remove(id, index) {
+                this.shopcar.splice(index, 1);
+                this.$store.commit("removeFormCar", id);
+            },
+
+            selectedChanged(id, val) {
+                var goodsinfo = {
+                    "id": id,
+                    "selected": val
+                };
+                this.$store.commit('updateGoodsSelected', goodsinfo);
             }
         }
     }
@@ -99,5 +128,16 @@
             }
 
         }
+        .jiesuan {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            .red {
+                color: red;
+                font-weight: bold;
+                font-size: 16px;
+            }
+        }
+
     }
 </style>

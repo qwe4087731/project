@@ -1,6 +1,10 @@
 <template>
     <div class="app-container">
-        <mt-header fixed title="顶部导航"></mt-header>
+        <mt-header fixed title="顶部导航">
+            <span slot="left" @click="goBack" v-show="flag">
+                <mt-button icon="back">返回</mt-button>
+            </span>
+        </mt-header>
         <transition>
             <router-view></router-view>
         </transition>
@@ -30,14 +34,38 @@
     export default {
         data: function () {
             return {
-                msg: '123'
+                msg: '123',
+                flag: false
+            }
+        },
+
+        created() {
+            if (this.$route.path === '/home') {
+                this.flag = false;
+            } else {
+                this.flag = true;
             }
         },
         methods: {
             show: function () {
                 console.log("调用login组件的show方法");
+            },
+
+            goBack() {
+                this.$router.go(-1);
+            }
+        },
+
+        watch: {
+            '$route.path': function (newVal) {
+                if (newVal === '/home') {
+                    this.flag = false;
+                } else {
+                    this.flag = true;
+                }
             }
         }
+
 
     }
 </script>
