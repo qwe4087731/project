@@ -1,7 +1,7 @@
 package com.smart.db.mybatis.bean;
 
 import java.io.Serializable;
-import java.util.Date; 
+import java.util.Date;
 
 public class SectionDO implements Serializable {
     private Integer id;
