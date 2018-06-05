@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,13 +84,19 @@ public class UserController {
 	// 2.必须加 method=RequestMethod.POST
 	@RequestMapping(value = "/info", method = RequestMethod.POST)
 	@ResponseBody
-	public void login(@CookieValue("token") String token,
+	public void login(
+			@CookieValue(value = "token", required = false) String token,
 			HttpServletResponse response) {
 		System.out.println("token:" + token);
 		JSONArray array = new JSONArray();
-		array.put(1);
-		array.put("123");
-		array.put(new User(1, "qz"));
+		if (StringUtils.isEmpty(token)) {
+			array.put(-1);
+			array.put("请先登录");
+		} else {
+			array.put(1);
+			array.put("123");
+			array.put(new User(1, "qz"));
+		}
 
 		try {
 			String result = new ObjectMapper().writeValueAsString(array);
