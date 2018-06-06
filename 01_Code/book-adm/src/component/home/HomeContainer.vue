@@ -1,27 +1,35 @@
 <template>
     <div>
+        <aside class="aside clearfix">
+            <div class="pull-right">
+                <nav>
+                    <ul class="list-inline">
+                        <li>Hi!{{userInfo.name}}</li>
+                        <li><span class="glyphicon glyphicon-triangle-right"></span>退出系统</li>
+                        <li><span class="glyphicon glyphicon-triangle-right"></span>修改密码</li>
+                        <li><span class="glyphicon glyphicon-triangle-right"></span>关于我们</li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
         <header>
-            <nav>
+            <nav class="col-md-2">
                 <dl>
-                    <dt>爬虫维护</dt>
-                    <dd></dd>
+                    <dt>
+                        <button class="btn btn-block">爬虫维护<span class="caret pull-right"></span></button>
+                    </dt>
+                    <dd><a class="btn btn-block">123123123</a></dd>
+                    <dd><a class="btn btn-block">123123123</a></dd>
                 </dl>
                 <dl>
-                    <dt>小说维护</dt>
-                    <dd></dd>
+                    <dt>
+                        <button class="btn btn-block">小说维护<span class="caret"></span></button>
+                    </dt>
+                    <dd><a class="btn btn-block">123123123</a></dd>
                 </dl>
             </nav>
         </header>
-        <aside>
-            <div>{{userInfo.name}}</div>
-            <nav>
-                <ul>
-                    <li>退出系统</li>
-                    <li>修改密码</li>
-                    <li>关于我们</li>
-                </ul>
-            </nav>
-        </aside>
     </div>
 </template>
 
@@ -71,5 +79,12 @@
 </script>
 
 <style scoped>
+    .btn {
+        border-radius: 50px;
+    }
 
+    .glyphicon-triangle-right {
+        font-size: 14px;
+        color: white;
+    }
 </style>
