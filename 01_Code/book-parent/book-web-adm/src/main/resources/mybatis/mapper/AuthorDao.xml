@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.db.mybatis.dao.AuthorDao">
+  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.AuthorDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="intro" jdbcType="VARCHAR" property="intro" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+  </resultMap>
+  <sql id="Criterion_Where_Clause">
+    <where>
+      <foreach collection="orWhereClausesList" item="whereclauses" separator="or">
+        <trim prefix="(" prefixOverrides="and" suffix=")">
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause">
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_Criterion_Where_Clause">
+    <where>
+      <foreach collection="criterion.orWhereClausesList" item="whereclauses" separator="or">
+        <trim prefix="(" prefixOverrides="and" suffix=")">
+          <foreach collection="whereclauses.andWhereClauselist" item="whereclause">
+            and ${whereclause.fieldName} ${whereclause.condition} #{whereclause.fieldValue}
+          </foreach>
+        </trim>
+      </foreach>
+    </where>
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from author
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smart.db.mybatis.bean.AuthorDO">
+    insert into author (id, name, intro, 
+      gmt_create, gmt_modified)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.AuthorDO">
+    update author
+    set name = #{name,jdbcType=VARCHAR},
+      intro = #{intro,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, intro, gmt_create, gmt_modified
+    from author
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select id, name, intro, gmt_create, gmt_modified
+    from author
+  </select>
+  <select id="listByCriterion" parameterType="org.phoenix.mybatis.criterion.SelectCriterion" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <choose>
+      <when test="_parameter != null and selectiveColumnlist.size() != 0">
+        <foreach collection="selectiveColumnlist" item="column" separator=",">
+          ${column}
+        </foreach>
+      </when>
+      <otherwise>
+        id, name, intro, gmt_create, gmt_modified
+      </otherwise>
+    </choose>
+    from author
+    <if test="_parameter != null ">
+      <include refid="Criterion_Where_Clause" />
+    </if>
+    <if test="orderByClause != null and orderByClause != ''">
+      order by ${orderByClause}
+    </if>
+    <if test="_parameter != null and length != 0">
+      limit ${begin}, ${length}
+    </if>
+  </select>
+  <select id="countByCriterion" parameterType="org.phoenix.mybatis.criterion.CountCriterion" resultType="java.lang.Integer">
+    select count(*) from author
+    <if test="_parameter != null ">
+      <include refid="Criterion_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriterion" parameterType="map">
+    update author
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.intro != null">
+        intro = #{record.intro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="criterion != null">
+      <choose>
+        <when test="criterion.orWhereClausesList.size() == 0 || criterion.orWhereClausesList.get(0).andWhereClauselist.size() == 0">
+          error
+        </when>
+        <otherwise>
+          <include refid="Update_Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </update>
+  <delete id="deleteByCriterion" parameterType="org.phoenix.mybatis.criterion.DeleteCriterion">
+    delete from author
+    <if test="_parameter != null">
+      <choose>
+        <when test="orWhereClausesList.size() == 0 || orWhereClausesList.get(0).andWhereClauselist.size() == 0">
+          error
+        </when>
+        <otherwise>
+          <include refid="Criterion_Where_Clause" />
+        </otherwise>
+      </choose>
+    </if>
+  </delete>
+</mapper>

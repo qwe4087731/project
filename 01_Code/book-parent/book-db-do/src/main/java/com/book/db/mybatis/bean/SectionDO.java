@@ -1,4 +1,4 @@
-package com.smart.db.mybatis.bean;
+package com.book.db.mybatis.bean;
 
 import java.io.Serializable;
 import java.util.Date;
