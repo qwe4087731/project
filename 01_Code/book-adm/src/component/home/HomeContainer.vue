@@ -48,28 +48,9 @@
 
         methods: {
             getUserInfo() {
-                // this.$http.get('api/getUserInfo').then(result => {
-                //     var data = result.body;
-                //     if (data[0] == 1) {
-                //         global.user_token = data[2].token;
-                //         this.$router.push({
-                //             path: '/home'
-                //         });
-                //     } else if (data[0] == -1) {
-                //         this.$router.push({
-                //             path: '/login'
-                //         });
-                //     } else {
-                //         console.log("获取用户信息失败");
-                //     }
-                // }, result => {
-                //     console.log("获取用户信息失败");
-                // });
-
                 var that = this;
                 this.request('user/info.html', 'POST', null, function (data) {
                     that.userInfo = data;
-                    // console.log(data);
                 }, function (errMsg, errCode) {
                     console.log("读取用戶信息失敗");
                 });
