@@ -142,7 +142,7 @@
 				<configuration>
 					<container>
 						<containerId>tomcat7x</containerId>
-						<home>E:/Tools/apache-tomcat-7.0.47</home>
+						<home>D:/Tools/apache-tomcat-7.0.84</home>
 					</container>
 					<configuration>
 						<type>standalone</type>
