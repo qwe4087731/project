@@ -104,27 +104,26 @@
                 }
             },
             login() {
-                if (!this.email) {
-                    this.emailInValid = true;
-                    return;
-                }
-                if (!this.password) {
-                    this.passwordInvalid = true;
-                    return;
-                }
+                // if (!this.email) {
+                //     this.emailInValid = true;
+                //     return;
+                // }
+                // if (!this.password) {
+                //     this.passwordInvalid = true;
+                //     return;
+                // }
                 this.disabled = true;
                 this.request('user/login.html', 'POST', {
-                    username: this.email,
-                    password: this.password
+                    username: this.inputs.email.text,
+                    password: this.inputs.password.text
                 }, data => {
-                    // global.token = data.token;
                     console.log("登录成功");
-                    this.$cookies.set("token", global.token,)
+                    this.$cookies.set("token", data.token);
                     this.$router.push({
                         path: '/home'
                     });
                 }, (errMsg, errCode) => {
-                    console.log("登录失败");
+                    console.log("登录失败,errMsg:" + errMsg + ",errCode:" + errCode);
                     console.log(errMsg);
                     console.log(errCode);
                 });
