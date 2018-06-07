@@ -1,7 +1,10 @@
 package com.smart.java;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.phoenix.common.util.HttpUtils;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -56,7 +59,19 @@ public class WebTest {
 	// form);
 	// }
 
-		@Test
+	public static void main(String[] args) throws Exception {
+		if (true) {
+			HashMap<String, String> headMap = new HashMap<String, String>();
+			headMap.put("Accept", "application/xml");
+			headMap.put("Content-Type", "application/xml");
+			Map<String, String> bodyMap = new HashMap<String, String>();
+			// bodyMap.put(", value);
+			HttpUtils.postData("http://localhost:8080/smart/user/handle51.html", "utf-8", headMap, bodyMap);
+			return;
+		}
+	}
+
+	@Test
 	public void testhandle51WithXml() {
 
 		RestTemplate restTemplate = buildRestTemplate();
@@ -66,21 +81,17 @@ public class WebTest {
 		user.setImgId(12);
 
 		HttpHeaders entityHeaders = new HttpHeaders();
-		entityHeaders
-				.setContentType(MediaType.valueOf("application/json;UTF-8"));
-		entityHeaders.setAccept(Collections
-				.singletonList(MediaType.APPLICATION_JSON));
-		HttpEntity<UserDO> requestEntity = new HttpEntity<UserDO>(user,
-				entityHeaders);
+		entityHeaders.setContentType(MediaType.valueOf("application/json"));
+		entityHeaders.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		HttpEntity<UserDO> requestEntity = new HttpEntity<UserDO>(user, entityHeaders);
 
-		ResponseEntity<UserDO> responseEntity = restTemplate.exchange(
-				"http://localhost:8080/smart/user/handle51.html",
+		ResponseEntity<UserDO> responseEntity = restTemplate.exchange("http://localhost:8080/smart/user/handle51.html",
 				HttpMethod.POST, requestEntity, UserDO.class);
 
 		UserDO responseUser = responseEntity.getBody();
 		Assert.assertNotNull(responseUser);
 		Assert.assertEquals(1000, (int) responseUser.getId());
-		Assert.assertEquals("tom", responseUser.getName());
+		Assert.assertEquals("tom1", responseUser.getName());
 	}
 
 	private RestTemplate buildRestTemplate() {
