@@ -62,7 +62,7 @@ public class UserController {
 	@RequestMapping(value = "/info", method = RequestMethod.POST)
 	public JSONArray info(
 			@CookieValue(value = "token", required = false) String encryptToken) {
-		String token = SessionCrypt.encrypt(encryptToken);
+		String token = SessionCrypt.decrypt(encryptToken);
 		JSONArray array = new JSONArray();
 		if (token == null) {
 			array.put(-1);
@@ -72,7 +72,7 @@ public class UserController {
 
 		int userId = NumberUtils.str2Int(token);
 		if (userId <= 0) {
-			logger.error("get userinfo token:" + token);
+			logger.error("get userinfo token error:" + token);
 			array.put(-1);
 			array.put("账号信息有误");
 			return array;
