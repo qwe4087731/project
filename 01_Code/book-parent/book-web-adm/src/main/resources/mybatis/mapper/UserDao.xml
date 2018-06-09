@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smart.db.mybatis.dao.UserDao">
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.UserDO">
+<mapper namespace="com.book.db.mybatis.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.book.db.mybatis.bean.UserDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="img_id" jdbcType="INTEGER" property="imgId" />
@@ -34,13 +34,13 @@
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.UserDO">
+  <insert id="insert" parameterType="com.book.db.mybatis.bean.UserDO">
     insert into user (id, name, img_id, 
       gmt_create, gmt_modified)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{imgId,jdbcType=INTEGER}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.UserDO">
+  <update id="updateByPrimaryKey" parameterType="com.book.db.mybatis.bean.UserDO">
     update user
     set name = #{name,jdbcType=VARCHAR},
       img_id = #{imgId,jdbcType=INTEGER},

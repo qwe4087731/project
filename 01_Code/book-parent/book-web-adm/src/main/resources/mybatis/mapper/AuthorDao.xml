@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smart.db.mybatis.dao.AuthorDao">
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.AuthorDO">
+<mapper namespace="com.book.db.mybatis.dao.AuthorDao">
+  <resultMap id="BaseResultMap" type="com.book.db.mybatis.bean.AuthorDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="intro" jdbcType="VARCHAR" property="intro" />
@@ -34,13 +34,13 @@
     delete from author
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.AuthorDO">
+  <insert id="insert" parameterType="com.book.db.mybatis.bean.AuthorDO">
     insert into author (id, name, intro, 
       gmt_create, gmt_modified)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{intro,jdbcType=VARCHAR}, 
       #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.AuthorDO">
+  <update id="updateByPrimaryKey" parameterType="com.book.db.mybatis.bean.AuthorDO">
     update author
     set name = #{name,jdbcType=VARCHAR},
       intro = #{intro,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smart.db.mybatis.dao.SectionDao">
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.SectionDO">
+<mapper namespace="com.book.db.mybatis.dao.SectionDao">
+  <resultMap id="BaseResultMap" type="com.book.db.mybatis.bean.SectionDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
     <result column="ordered" jdbcType="INTEGER" property="ordered" />
@@ -38,7 +38,7 @@
     delete from section
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.SectionDO">
+  <insert id="insert" parameterType="com.book.db.mybatis.bean.SectionDO">
     insert into section (id, book_id, ordered, 
       section_num, section_name, part_num, 
       part_name, gmt_create, gmt_modified
@@ -48,7 +48,7 @@
       #{partName,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.SectionDO">
+  <update id="updateByPrimaryKey" parameterType="com.book.db.mybatis.bean.SectionDO">
     update section
     set book_id = #{bookId,jdbcType=INTEGER},
       ordered = #{ordered,jdbcType=INTEGER},

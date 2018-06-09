@@ -10,7 +10,7 @@
     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<!-- 扫描web包，应用Spring的注解 -->
-	<context:component-scan base-package="com.smart.web" />
+	<context:component-scan base-package="com.book.web" />
 
 	<!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
 	<bean
@@ -35,23 +35,23 @@
 		<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
 		<bean
 			class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
-		<bean
+		<!-- <bean
 			class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"
-			p:marshaller-ref="xmlMarshaller" p:unmarshaller-ref="xmlMarshaller">
+			p:marshaller-ref="xmlMarshaller" p:unmarshaller-ref="xmlMarshaller"> -->
 		</bean>
 		<bean
 			class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
 	</util:list>
 
-	<bean id="xmlMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
+	<!-- <bean id="xmlMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller">
 		<property name="streamDriver">
 			<bean class="com.thoughtworks.xstream.io.xml.StaxDriver" />
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.smart.db.mybatis.bean.UserDO</value>
+				<value>com.book.db.mybatis.bean.UserDO</value>
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 </beans>

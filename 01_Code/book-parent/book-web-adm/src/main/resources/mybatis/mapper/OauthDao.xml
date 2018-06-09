@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.smart.db.mybatis.dao.OauthDao">
-  <resultMap id="BaseResultMap" type="com.smart.db.mybatis.bean.OauthDO">
+<mapper namespace="com.book.db.mybatis.dao.OauthDao">
+  <resultMap id="BaseResultMap" type="com.book.db.mybatis.bean.OauthDO">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="oauth_type" jdbcType="TINYINT" property="oauthType" />
@@ -36,7 +36,7 @@
     delete from oauth
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.smart.db.mybatis.bean.OauthDO">
+  <insert id="insert" parameterType="com.book.db.mybatis.bean.OauthDO">
     insert into oauth (id, user_id, oauth_type, 
       oauth_id, oauth_token, gmt_create, 
       gmt_modified)
@@ -44,7 +44,7 @@
       #{oauthId,jdbcType=VARCHAR}, #{oauthToken,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.smart.db.mybatis.bean.OauthDO">
+  <update id="updateByPrimaryKey" parameterType="com.book.db.mybatis.bean.OauthDO">
     update oauth
     set user_id = #{userId,jdbcType=INTEGER},
       oauth_type = #{oauthType,jdbcType=TINYINT},
