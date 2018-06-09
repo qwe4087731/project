@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>book-parent</artifactId>
 		<groupId>com.book</groupId>
+		<artifactId>book-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -122,6 +122,32 @@
 			<artifactId>book-db-do</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
+
+	<build>
+		<finalName>book</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<!-- 表示管理页面，maven插件需要根据这个页面部署应用 -->
+					<server>tomcat7</server>
+					<!-- 引用setting.xml中配置的server，setting会配置一个server -->
+					<path>/book</path>
+					<!-- user必须具有manager-gui和manager-script权限 -->
+					<!-- 连接server的用户名以及密码 <username>admin</username> <password>admin</password> -->
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.codehaus.cargo</groupId> <artifactId>cargo-maven2-plugin</artifactId> 
+				<version>1.6.5</version> <configuration> <container> <containerId>tomcat7x</containerId> 
+				<home>E:/Tools/apache-tomcat-7.0.47</home> </container> <configuration> <type>standalone</type> 
+				D:/workspace_android/project/01_Code/webapp-demo-parent/webapp-demo/target/tomcat 
+				<home>${project.build.directory}/tomcat</home> <properties> <cargo.server.port>8080</cargo.server.port> 
+				</properties> </configuration> </configuration> </plugin> -->
+		</plugins>
+	</build>
 </project>
