@@ -117,12 +117,14 @@
                     username: this.inputs.email.text,
                     password: this.inputs.password.text
                 }, data => {
+                    this.disabled = false;
                     console.log("登录成功");
                     this.$cookies.set("token", data.token);
                     this.$router.push({
                         path: '/home'
                     });
                 }, (errMsg, errCode) => {
+                    this.disabled = false;
                     console.log("登录失败,errMsg:" + errMsg + ",errCode:" + errCode);
                     console.log(errMsg);
                     console.log(errCode);

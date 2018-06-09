@@ -28,7 +28,7 @@ public class SessionCrypt {
 
 		String encryptData = null;
 		try {
-			encryptData = aesCoder.decrypt(data);
+			encryptData = aesCoder.encrypt(data);
 		} catch (Exception e) {
 			logger.error("encrypt data failed:" + data, e);
 		}
