@@ -50,7 +50,9 @@
             getUserInfo() {
                 var that = this;
                 this.request('user/info.html', 'POST', null, function (data) {
-                    that.userInfo = data;
+                    that.userInfo = {
+                        name: data
+                    };
                 }, function (errMsg, errCode) {
                     console.log("读取用戶信息失敗");
                 });

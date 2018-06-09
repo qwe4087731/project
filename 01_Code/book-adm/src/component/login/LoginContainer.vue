@@ -119,7 +119,7 @@
                 }, data => {
                     this.disabled = false;
                     console.log("登录成功");
-                    this.$cookies.set("token", data.token);
+                    this.$cookies.set("token", data);
                     this.$router.push({
                         path: '/home'
                     });

@@ -1,11 +1,15 @@
 package com.book.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.phoenix.common.util.JsonUtils;
 import org.phoenix.common.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +33,7 @@ public class UserController {
 		return userServcie;
 	}
 
+	@Autowired
 	public void setUserServcie(UserService userServcie) {
 		this.userServcie = userServcie;
 	}
@@ -86,6 +91,10 @@ public class UserController {
 		}
 		array.put(1);
 		array.put("");
+		// JSONObject userJSON = new JSONObject();
+		// userJSON.put("name", userDO.getName());
+		// userJSON.put("img", userDO.getImgId());
+		// array.put(userJSON);
 		array.put(userDO.getName());
 		return array;
 	}
