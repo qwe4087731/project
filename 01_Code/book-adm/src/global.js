@@ -8,6 +8,6 @@
 // Vue.use(install);
 
 export default {
-    request_host: "http://192.168.2.119:8080/smart",
+    request_host: "http://192.168.2.119:8080/book",
     user_token: ""
 }

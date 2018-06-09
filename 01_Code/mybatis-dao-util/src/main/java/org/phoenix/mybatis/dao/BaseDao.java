@@ -23,7 +23,8 @@ public interface BaseDao<T> {
 
 	int countByCriterion(CountCriterion criterion);
 
-	int updateByCriterion(@Param("record") T t, @Param("criterion") UpdateCriterion criterion);
+	int updateByCriterion(@Param("record") T t,
+			@Param("criterion") UpdateCriterion criterion);
 
 	int deleteByCriterion(DeleteCriterion criterion);
 }
