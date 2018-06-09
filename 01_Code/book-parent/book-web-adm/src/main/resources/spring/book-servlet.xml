@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<!-- 扫描web包，应用Spring的注解 -->
+	<context:component-scan base-package="com.book.web" />
+
+	<!-- 配置视图解析器，将ModelAndView及字符串解析为具体的页面 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:viewClass="org.springframework.web.servlet.view.JstlView" p:prefix="/WEB-INF/jsp/"
+		p:suffix=".jsp" />
+
+
+	<!-- 这里相当于定义了2个RequestMappingHandlerAdapter，一个是RequestMappingHandlerAdapter，一个是<mvc:annotation-driven 
+		/>中定义的，默认优先级都是Integer.MAX表示最低优先级，谁先定义谁谁优先级高，所以这里需要把我们自定义的放在前面 http://www.cnblogs.com/fangjian0423/p/spring-Ordered-interface.html -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"
+		p:messageConverters-ref="messageConverters">
+	</bean>
+	<mvc:annotation-driven />
+
+	<util:list id="messageConverters">
+		<bean
+			class="org.springframework.http.converter.BufferedImageHttpMessageConverter" />
+		<bean
+			class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+		<bean class="org.springframework.http.converter.StringHttpMessageConverter" />
+		<bean
+			class="org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter" />
+		<!-- <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter" 
+			p:marshaller-ref="xmlMarshaller" p:unmarshaller-ref="xmlMarshaller"> </bean> -->
+		<bean
+			class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	</util:list>
+
+	<!-- <bean id="xmlMarshaller" class="org.springframework.oxm.xstream.XStreamMarshaller"> 
+		<property name="streamDriver"> <bean class="com.thoughtworks.xstream.io.xml.StaxDriver" 
+		/> </property> <property name="annotatedClasses"> <list> <value>com.book.db.mybatis.bean.UserDO</value> 
+		</list> </property> </bean> -->
+
+</beans>

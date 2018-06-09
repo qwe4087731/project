@@ -3,13 +3,19 @@ package com.book.web;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.phoenix.common.util.JsonUtils;
+import org.phoenix.common.util.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.book.db.mybatis.bean.UserDO;
+import com.book.service.UserService;
+import com.book.util.SessionCrypt;
 
 @CrossOrigin
 @RestController
@@ -17,6 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 	private static Logger logger = LoggerFactory
 			.getLogger(UserController.class);
+	private UserService userServcie;
+
+	public UserService getUserServcie() {
+		return userServcie;
+	}
+
+	public void setUserServcie(UserService userServcie) {
+		this.userServcie = userServcie;
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public JSONArray login(@RequestBody String requestBody) {
@@ -24,30 +39,54 @@ public class UserController {
 		JSONArray array = new JSONArray();
 		if (jsonObject == null) {
 			array.put(0);
-			array.put("≤Œ ˝¥ÌŒÛ");
+			array.put("ÂèÇÊï∞ÈîôËØØ");
 			return array;
 		}
-		logger.info("jsonObject:" + jsonObject);
-		array.put(1);
-		array.put("");
-		array.put("token");
-		return array;
-	}
-	
-	@RequestMapping(value = "/info", method = RequestMethod.POST)
-	public JSONArray info() {
-		JSONObject jsonObject = JsonUtils.parseJSONObject(null);
-		JSONArray array = new JSONArray();
-		if (jsonObject == null) {
+		if (logger.isInfoEnabled()) {
+			logger.info("login jsonObject:" + jsonObject);
+		}
+		String username = jsonObject.optString("username", "");
+		String password = jsonObject.optString("password", "");
+		if (username.equals("admin") && password.equals("admin")) {
+			String token = SessionCrypt.encrypt("1");
+			array.put(1);
+			array.put("");
+			array.put(token);
+		} else {
 			array.put(0);
-			array.put("≤Œ ˝¥ÌŒÛ");
-			return array;
+			array.put("Ë¥¶Âè∑ÂØÜÁ†Å‰∏çÊ≠£Á°Æ");
 		}
-		logger.info("jsonObject:" + jsonObject);
-		array.put(1);
-		array.put("");
-		array.put("token");
 		return array;
 	}
 
+	@RequestMapping(value = "/info", method = RequestMethod.POST)
+	public JSONArray info(
+			@CookieValue(value = "token", required = false) String encryptToken) {
+		String token = SessionCrypt.encrypt(encryptToken);
+		JSONArray array = new JSONArray();
+		if (token == null) {
+			array.put(-1);
+			array.put("Ë¥¶Âè∑‰ø°ÊÅØÊúâËØØ");
+			return array;
+		}
+
+		int userId = NumberUtils.str2Int(token);
+		if (userId <= 0) {
+			logger.error("get userinfo token:" + token);
+			array.put(-1);
+			array.put("Ë¥¶Âè∑‰ø°ÊÅØÊúâËØØ");
+			return array;
+		}
+		UserDO userDO = userServcie.getUserInfo(userId);
+		if (userDO == null) {
+			logger.error("user not exist:" + userId);
+			array.put(-1);
+			array.put("Ë¥¶Âè∑‰ø°ÊÅØÊúâËØØ");
+			return array;
+		}
+		array.put(1);
+		array.put("");
+		array.put(userDO.getName());
+		return array;
+	}
 }
