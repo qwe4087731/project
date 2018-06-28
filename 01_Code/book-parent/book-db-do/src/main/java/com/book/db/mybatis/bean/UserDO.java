@@ -1,34 +1,26 @@
-package com.smart.db.mybatis.bean;
+package com.book.db.mybatis.bean;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class OauthDO implements Serializable {
+public class UserDO implements Serializable {
     private Integer id;
 
-    private Integer userId;
+    private String name;
 
-    private Byte oauthType;
-
-    private String oauthId;
-
-    private String oauthToken;
+    private Integer imgId;
 
     private Date gmtCreate;
 
     private Date gmtModified;
 
-    public static final String TABLENAME = "oauth";
+    public static final String TABLENAME = "user";
 
     public static final String ID = "id";
 
-    public static final String USER_ID = "user_id";
+    public static final String NAME = "name";
 
-    public static final String OAUTH_TYPE = "oauth_type";
-
-    public static final String OAUTH_ID = "oauth_id";
-
-    public static final String OAUTH_TOKEN = "oauth_token";
+    public static final String IMG_ID = "img_id";
 
     public static final String GMT_CREATE = "gmt_create";
 
@@ -42,36 +34,20 @@ public class OauthDO implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
-    public Byte getOauthType() {
-        return oauthType;
+    public Integer getImgId() {
+        return imgId;
     }
 
-    public void setOauthType(Byte oauthType) {
-        this.oauthType = oauthType;
-    }
-
-    public String getOauthId() {
-        return oauthId;
-    }
-
-    public void setOauthId(String oauthId) {
-        this.oauthId = oauthId == null ? null : oauthId.trim();
-    }
-
-    public String getOauthToken() {
-        return oauthToken;
-    }
-
-    public void setOauthToken(String oauthToken) {
-        this.oauthToken = oauthToken == null ? null : oauthToken.trim();
+    public void setImgId(Integer imgId) {
+        this.imgId = imgId;
     }
 
     public Date getGmtCreate() {
@@ -97,10 +73,8 @@ public class OauthDO implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", userId=").append(userId);
-        sb.append(", oauthType=").append(oauthType);
-        sb.append(", oauthId=").append(oauthId);
-        sb.append(", oauthToken=").append(oauthToken);
+        sb.append(", name=").append(name);
+        sb.append(", imgId=").append(imgId);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
         sb.append("]");
@@ -118,12 +92,10 @@ public class OauthDO implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        OauthDO other = (OauthDO) that;
+        UserDO other = (UserDO) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
-            && (this.getOauthType() == null ? other.getOauthType() == null : this.getOauthType().equals(other.getOauthType()))
-            && (this.getOauthId() == null ? other.getOauthId() == null : this.getOauthId().equals(other.getOauthId()))
-            && (this.getOauthToken() == null ? other.getOauthToken() == null : this.getOauthToken().equals(other.getOauthToken()))
+            && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
+            && (this.getImgId() == null ? other.getImgId() == null : this.getImgId().equals(other.getImgId()))
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
             && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()));
     }
@@ -133,10 +105,8 @@ public class OauthDO implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
-        result = prime * result + ((getOauthType() == null) ? 0 : getOauthType().hashCode());
-        result = prime * result + ((getOauthId() == null) ? 0 : getOauthId().hashCode());
-        result = prime * result + ((getOauthToken() == null) ? 0 : getOauthToken().hashCode());
+        result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
+        result = prime * result + ((getImgId() == null) ? 0 : getImgId().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
         return result;

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -14,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,36 +51,34 @@ public class UserController {
 		return new ResponseEntity<UserDO>(user, HttpStatus.OK);
 	}
 
+	// @RequestParam(value="password", required=false
+
 	// 2.必须加 method=RequestMethod.POST
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public void login(@RequestParam("username") String username,
-			@RequestParam("password") String password,
-			HttpServletResponse response) {
-		// UserDO user = new UserDO();
-		// user.setId(1000);
-		// user.setName("qz");
-		// user.set
-		// return new ResponseEntity<UserDO>(user, HttpStatus.OK);
-		// Gson
-		// os.write(b);
-
-		// response.addHeader("Access-Control-Allow-Origin", "*");
-		// response.addHeader("Access-Control-Allow-Headers",
-		// "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-		// response.addHeader("Access-Control-Allow-Methods",
-		// "PUT,POST,GET,DELETE,OPTIONS");
+	public JSONArray login(@RequestBody String requestBody) {
+		JSONObject jsonObject = parseJSONObject(requestBody);
 		JSONArray array = new JSONArray();
-		array.put(1);
-		array.put("123");
-		array.put(new Token("123"));
-
-		try {
-			String result = new ObjectMapper().writeValueAsString(array);
-			response.getOutputStream().write(result.getBytes("utf-8"));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(jsonObject == null){
+			array.put(0);
+			array.put("参数错误");
+			return array;
 		}
+		logger.info("jsonObject:" + jsonObject);
+		array.put(1);
+		array.put("");
+		array.put(new Token("123"));
+		return array;
+	}
+	
+	private JSONObject parseJSONObject(String body){
+		try {
+			JSONObject jsonObject = new JSONObject(body);
+			return jsonObject;
+		} catch (JSONException e) {
+			logger.warn("parse json failed:" + body);
+		}
+		return null;
 	}
 
 	// 2.必须加 method=RequestMethod.POST

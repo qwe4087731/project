@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- 批量扫描别名 -->
+		<package name="com.book.db.mybatis.bean" />
+	</typeAliases>
+	<!-- <environments default="development"> <environment id="development"> 
+		<transactionManager type="jdbc"></transactionManager> <dataSource type="pooled"> 
+		<property name="driver" value="com.mysql.jdbc.Driver" /> <property name="url" 
+		value="${jdbc.url}/test?useServerPrepStmts=true&amp;cachePrepStmts=true&amp;prepStmtCacheSize=250&amp;prepStmtCacheSqlLimit=2048" 
+		/> <property name="username" value="${jdbc.username" /> <property name="password" 
+		value="${jdbc.password}" /> </dataSource> </environment> . </environments> -->
+
+
+	<!-- 这里或者spring配置中的sqlSessionFactory都可以指定mapper文件位置，但是这里必须一项一项的列出，而spring的sqlSessionFactory可以通配符列出 
+		2种方式各有弊端，如果使用spring配置，则映射会配置在spring中，相对会有所耦合，如果 -->
+	<!-- <mappers> <mapper resource="com/smart/db/mybatis/mapper/UserInfoMapper.xml" 
+		/> </mappers> -->
+</configuration>

@@ -94,7 +94,7 @@ public class Base64Utils {
 		return new String(bytes, Charsets.UTF_8);
 	}
 
-	private static byte[] decode(CharSequence text, int factor) {
+	static byte[] decode(CharSequence text, int factor) {
 		int len = text.length() / 4;
 		int mod = text.length() % 4;
 		int add = 0;

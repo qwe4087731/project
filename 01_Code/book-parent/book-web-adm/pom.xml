@@ -1,17 +1,27 @@
-<?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.book</groupId>
 		<artifactId>book-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>book-web</artifactId>
+
+	<groupId>com.book</groupId>
+	<artifactId>book-web-adm</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>book-web Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+
+	<name>book-web-adm Maven Webapp</name>
+	<!-- FIXME change it to the project's website -->
+	<url>http://www.example.com</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -34,7 +44,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -78,6 +88,19 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180130</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -107,6 +130,32 @@
 			<artifactId>book-db-do</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
+
+	<build>
+		<finalName>book</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://localhost:8080/manager/text</url>
+					<!-- 表示管理页面，maven插件需要根据这个页面部署应用 -->
+					<server>tomcat7</server>
+					<!-- 引用setting.xml中配置的server，setting会配置一个server -->
+					<path>/book</path>
+					<!-- user必须具有manager-gui和manager-script权限 -->
+					<!-- 连接server的用户名以及密码 <username>admin</username> <password>admin</password> -->
+				</configuration>
+			</plugin>
+
+			<!-- <plugin> <groupId>org.codehaus.cargo</groupId> <artifactId>cargo-maven2-plugin</artifactId> 
+				<version>1.6.5</version> <configuration> <container> <containerId>tomcat7x</containerId> 
+				<home>E:/Tools/apache-tomcat-7.0.47</home> </container> <configuration> <type>standalone</type> 
+				D:/workspace_android/project/01_Code/webapp-demo-parent/webapp-demo/target/tomcat 
+				<home>${project.build.directory}/tomcat</home> <properties> <cargo.server.port>8080</cargo.server.port> 
+				</properties> </configuration> </configuration> </plugin> -->
+		</plugins>
+	</build>
 </project>

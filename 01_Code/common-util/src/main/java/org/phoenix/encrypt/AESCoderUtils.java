@@ -6,6 +6,8 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
+import org.phoenix.common.constant.CharSetConsts;
+
 //http://aub.iteye.com/blog/1129339
 //http://www.cnblogs.com/shoubianxingchen/p/5869373.html
 //http://blog.csdn.net/hbcui1984/article/details/5201247
@@ -29,7 +31,7 @@ public class AESCoderUtils {
 	private Cipher enCipher = null;
 	private Cipher deCipher = null;
 
-	private AESCoderUtils(String key) throws Exception {
+	public AESCoderUtils(String key) throws Exception {
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
 		keyGenerator.init(128, new SecureRandom(key.getBytes()));
 		SecretKey secretKey = keyGenerator.generateKey();
@@ -53,15 +55,18 @@ public class AESCoderUtils {
 
 	// 加密字符串(本质上是加密字符串的字节数组)，得到加密后的字节数组，转换成十六进制字符返回
 	public String encrypt(String data) throws Exception {
-		byte[] bytes = data.getBytes();
-		byte[] b = encrypt(bytes);
-		return new String(HexUtils.encode(b));
+		byte[] bytes = data.getBytes(CharSetConsts.UTF_8);
+		bytes = encrypt(bytes);
+		return Base64Utils.encode(bytes, 1).toString();
+		// return new String(HexUtils.encode(b));
 	}
 
 	// 解密字符串(传递的参数字符串必须是十六进制字符串)，首先把十六进制字符串转换成对应的字节数组，然后对该字节数组解密，得到原始字节数组，还原得到原始字符串
 	public String decrypt(String data) throws Exception {
-		byte[] b = decrpty(HexUtils.decode(data));
-		return new String(b);
+		// HexUtils.decode(data)
+		byte[] bytes = Base64Utils.decode(data, 1);
+		bytes = decrpty(bytes);
+		return new String(bytes, CharSetConsts.UTF_8);
 	}
 
 	public static void main(String[] args) throws Exception {

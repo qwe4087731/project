@@ -3,3 +3,9 @@ test-output/
 *.class
 .classpath
 .project
+node_modules
+.idea
+.vscode
+package-lock.json
+dist
+.settings
