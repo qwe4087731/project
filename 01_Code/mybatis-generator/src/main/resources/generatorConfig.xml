@@ -62,19 +62,28 @@
 
 		<table tableName="author" mapperName="AuthorDao"
 			domainObjectName="AuthorDO">
+			<!-- generatedKey必须在columnRenamingRule前面 -->
+			<generatedKey column="id" sqlStatement="MySql" identity="true"
+				type="post" />
 			<columnRenamingRule searchString="is_"
 				replaceString="" />
 		</table>
 		<table tableName="book" mapperName="BookDao" domainObjectName="BookDO">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"
+				type="post" />
 			<columnRenamingRule searchString="is_"
 				replaceString="" />
 		</table>
 		<table tableName="oauth" mapperName="OauthDao" domainObjectName="OauthDO">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"
+				type="post" />
 			<columnRenamingRule searchString="is_"
 				replaceString="" />
 		</table>
 		<table tableName="section" mapperName="SectionDao"
 			domainObjectName="SectionDO">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"
+				type="post" />
 			<columnRenamingRule searchString="is_"
 				replaceString="" />
 		</table>
@@ -84,6 +93,8 @@
 				replaceString="" />
 		</table>
 		<table tableName="user" mapperName="UserDao" domainObjectName="UserDO">
+			<generatedKey column="id" sqlStatement="MySql" identity="true"
+				type="post" />
 			<columnRenamingRule searchString="is_"
 				replaceString="" />
 			<!-- <generatedKey column="user_id" sqlStatement="JDBC" /> -->
