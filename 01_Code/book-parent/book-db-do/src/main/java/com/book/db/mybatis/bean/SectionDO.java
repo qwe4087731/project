@@ -10,7 +10,9 @@ public class SectionDO implements Serializable {
 
     private Integer ordered;
 
-    private Integer sectionNum;
+    private String tag;
+
+    private String sectionNum;
 
     private String sectionName;
 
@@ -29,6 +31,8 @@ public class SectionDO implements Serializable {
     public static final String BOOK_ID = "book_id";
 
     public static final String ORDERED = "ordered";
+
+    public static final String TAG = "tag";
 
     public static final String SECTION_NUM = "section_num";
 
@@ -66,12 +70,20 @@ public class SectionDO implements Serializable {
         this.ordered = ordered;
     }
 
-    public Integer getSectionNum() {
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag == null ? null : tag.trim();
+    }
+
+    public String getSectionNum() {
         return sectionNum;
     }
 
-    public void setSectionNum(Integer sectionNum) {
-        this.sectionNum = sectionNum;
+    public void setSectionNum(String sectionNum) {
+        this.sectionNum = sectionNum == null ? null : sectionNum.trim();
     }
 
     public String getSectionName() {
@@ -123,6 +135,7 @@ public class SectionDO implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", bookId=").append(bookId);
         sb.append(", ordered=").append(ordered);
+        sb.append(", tag=").append(tag);
         sb.append(", sectionNum=").append(sectionNum);
         sb.append(", sectionName=").append(sectionName);
         sb.append(", partNum=").append(partNum);
@@ -148,6 +161,7 @@ public class SectionDO implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getBookId() == null ? other.getBookId() == null : this.getBookId().equals(other.getBookId()))
             && (this.getOrdered() == null ? other.getOrdered() == null : this.getOrdered().equals(other.getOrdered()))
+            && (this.getTag() == null ? other.getTag() == null : this.getTag().equals(other.getTag()))
             && (this.getSectionNum() == null ? other.getSectionNum() == null : this.getSectionNum().equals(other.getSectionNum()))
             && (this.getSectionName() == null ? other.getSectionName() == null : this.getSectionName().equals(other.getSectionName()))
             && (this.getPartNum() == null ? other.getPartNum() == null : this.getPartNum().equals(other.getPartNum()))
@@ -163,6 +177,7 @@ public class SectionDO implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getBookId() == null) ? 0 : getBookId().hashCode());
         result = prime * result + ((getOrdered() == null) ? 0 : getOrdered().hashCode());
+        result = prime * result + ((getTag() == null) ? 0 : getTag().hashCode());
         result = prime * result + ((getSectionNum() == null) ? 0 : getSectionNum().hashCode());
         result = prime * result + ((getSectionName() == null) ? 0 : getSectionName().hashCode());
         result = prime * result + ((getPartNum() == null) ? 0 : getPartNum().hashCode());

@@ -1,7 +1,6 @@
 package com.book.db.mybatis.bean;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Date;
 
 public class BookDO implements Serializable {
@@ -11,6 +10,8 @@ public class BookDO implements Serializable {
 
     private Integer authorId;
 
+    private String authorName;
+
     private String intro;
 
     private String introDetail;
@@ -18,8 +19,6 @@ public class BookDO implements Serializable {
     private Date gmtCreate;
 
     private Date gmtModified;
-
-    private byte[] authorName;
 
     public static final String TABLENAME = "book";
 
@@ -29,6 +28,8 @@ public class BookDO implements Serializable {
 
     public static final String AUTHOR_ID = "author_id";
 
+    public static final String AUTHOR_NAME = "author_name";
+
     public static final String INTRO = "intro";
 
     public static final String INTRO_DETAIL = "intro_detail";
@@ -36,8 +37,6 @@ public class BookDO implements Serializable {
     public static final String GMT_CREATE = "gmt_create";
 
     public static final String GMT_MODIFIED = "gmt_modified";
-
-    public static final String AUTHOR_NAME = "author_name";
 
     public Integer getId() {
         return id;
@@ -61,6 +60,14 @@ public class BookDO implements Serializable {
 
     public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName == null ? null : authorName.trim();
     }
 
     public String getIntro() {
@@ -95,14 +102,6 @@ public class BookDO implements Serializable {
         this.gmtModified = gmtModified;
     }
 
-    public byte[] getAuthorName() {
-        return authorName;
-    }
-
-    public void setAuthorName(byte[] authorName) {
-        this.authorName = authorName;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -112,11 +111,11 @@ public class BookDO implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", name=").append(name);
         sb.append(", authorId=").append(authorId);
+        sb.append(", authorName=").append(authorName);
         sb.append(", intro=").append(intro);
         sb.append(", introDetail=").append(introDetail);
         sb.append(", gmtCreate=").append(gmtCreate);
         sb.append(", gmtModified=").append(gmtModified);
-        sb.append(", authorName=").append(authorName);
         sb.append("]");
         return sb.toString();
     }
@@ -136,11 +135,11 @@ public class BookDO implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getAuthorId() == null ? other.getAuthorId() == null : this.getAuthorId().equals(other.getAuthorId()))
+            && (this.getAuthorName() == null ? other.getAuthorName() == null : this.getAuthorName().equals(other.getAuthorName()))
             && (this.getIntro() == null ? other.getIntro() == null : this.getIntro().equals(other.getIntro()))
             && (this.getIntroDetail() == null ? other.getIntroDetail() == null : this.getIntroDetail().equals(other.getIntroDetail()))
             && (this.getGmtCreate() == null ? other.getGmtCreate() == null : this.getGmtCreate().equals(other.getGmtCreate()))
-            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()))
-            && (Arrays.equals(this.getAuthorName(), other.getAuthorName()));
+            && (this.getGmtModified() == null ? other.getGmtModified() == null : this.getGmtModified().equals(other.getGmtModified()));
     }
 
     @Override
@@ -150,11 +149,11 @@ public class BookDO implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getAuthorId() == null) ? 0 : getAuthorId().hashCode());
+        result = prime * result + ((getAuthorName() == null) ? 0 : getAuthorName().hashCode());
         result = prime * result + ((getIntro() == null) ? 0 : getIntro().hashCode());
         result = prime * result + ((getIntroDetail() == null) ? 0 : getIntroDetail().hashCode());
         result = prime * result + ((getGmtCreate() == null) ? 0 : getGmtCreate().hashCode());
         result = prime * result + ((getGmtModified() == null) ? 0 : getGmtModified().hashCode());
-        result = prime * result + (Arrays.hashCode(getAuthorName()));
         return result;
     }
 }
