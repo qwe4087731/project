@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/19 22:25:04                           */
+/* Created on:     2018/7/19 22:31:53                           */
 /*==============================================================*/
 
 
@@ -44,8 +44,8 @@ create table book
    name                 varchar(128) not null,
    author_id            int unsigned not null,
    author_name          varchar(32) not null,
-   intro                varchar(256) not null,
-   intro_detail         varchar(256) not null,
+   intro                varchar(256) not null default "",
+   intro_detail         varchar(256) not null default "",
    gmt_create           timestamp not null default CURRENT_TIMESTAMP,
    gmt_modified         timestamp not null default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
    primary key (id)
@@ -91,7 +91,7 @@ create table section
    id                   int unsigned not null auto_increment,
    book_id              int unsigned not null,
    ordered              int unsigned not null,
-   tag                  varchar(32),
+   tag                  varchar(32) default "",
    section_num          varchar(16) not null,
    section_name         varchar(64) not null,
    part_num             int unsigned not null default 0,
